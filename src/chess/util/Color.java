@@ -4,9 +4,10 @@
 package chess.util;
 
 /**
- * @author khen0002
- *
+ * Class Color.java
  */
-public enum Color {
+public enum Color  {
+	
+	WHITE, BLACK;
 	
 }

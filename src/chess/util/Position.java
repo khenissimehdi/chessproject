@@ -4,8 +4,7 @@
 package chess.util;
 
 /**
- * @author khen0002
- *
+ * Class Position.java
  */
 public final class Position {
 

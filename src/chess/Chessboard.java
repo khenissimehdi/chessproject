@@ -124,9 +124,10 @@ public final class Chessboard {
 						} else if (line == 14) {
 							res += "┃";
 						} else if (line % 2 != 0) {
-							res += " ";
-							res += " ";
-							res += " ";
+							if (getPiece(line -, row) == null)
+								res += "   ";
+							else
+								res += " " + getPiece(line, row) + " ";
 						} else {
 							res += "┃";
 						}

@@ -53,10 +53,13 @@ public final class Game {
  		 			Position end = new Position(sc.nextLine());
  		 			game.turn(start, end);
  		 			error = false;
- 				} catch (Exception e) {
+ 				} catch (IllegalArgumentException e) {
  					System.out.print(e.getMessage() + "\n");
  					error = true;
- 				}
+ 				} catch (ChessMoveException e) {
+ 					System.out.print(e.getMessage() + "\n");
+ 					error = true;
+ 				} 
  			}
  		}
  		
@@ -71,10 +74,13 @@ public final class Game {
  		 			Position end = new Position(sc.nextLine());
  		 			game.turn(start, end);
  		 			error = false;
- 				} catch (Exception e) {
+ 				} catch (IllegalArgumentException e) {
  					System.out.print(e.getMessage() + "\n");
  					error = true;
- 				}
+ 				} catch (ChessMoveException e) {
+ 					System.out.print(e.getMessage() + "\n");
+ 					error = true;
+ 				} 
  			}
  		}
  		System.out.println(game.board);
@@ -84,8 +90,7 @@ public final class Game {
  	
  	public void turn(Position start, Position end) throws ChessMoveException
  	{
- 		board.setPiece(end, board.getPiece(start));
- 		(this.board.getPiece(start)).moveTo(end);
+ 		board.getPiece(start).moveTo(end);
  	}
 
 	/**

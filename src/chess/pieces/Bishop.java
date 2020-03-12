@@ -25,7 +25,18 @@ public final class Bishop extends Piece {
 	@Override
 	public boolean isValidMove(Position destination)
 	{
-		return true;
+		boolean res = super.isValidMove(destination);
+		if (res)
+		{
+			if (getPosition().isOnSameDiagonalAs(destination))
+			{
+				if (this.board.isPiecePresentOnSameDiagonalBetween(this.getPosition(), destination))
+				{
+					res = false;
+				}
+			}
+		}
+		return res;
 	}
 
 }

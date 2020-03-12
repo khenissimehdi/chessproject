@@ -14,13 +14,13 @@ import chess.util.Position;
  */
 public abstract class Piece {
 
-	private Chessboard board;
+	protected Chessboard board;
 	private Color color;
 	private String name;
 	private Position position;
 	private char symbol;
-	
-	
+
+
 	public Piece(Chessboard board,Position position,Color color,String name,char symbol) {
 		this.board= board;
 		this.position=position;
@@ -28,28 +28,28 @@ public abstract class Piece {
 		this.name=name;
 		this.symbol=symbol;
 	}
-	
-	
+
+
 	public Color getColor() {
 		return this.color;
 	}
-	
-	
+
+
 	public String getName() {
 		return this.name;
 	}
-	
-	
+
+
 	public Position getPosition() {
 		return this.position;
 	}
-	
-	
+
+
 	public char getSymbol() {
 		return this.symbol;
 	}
-	
-	
+
+
 	public boolean isBlack() {
 		boolean res = false;
 		if(this.color == Color.BLACK) {
@@ -57,8 +57,8 @@ public abstract class Piece {
 		}
 		return res;
 	}
-	
-	
+
+
 	public boolean isWhite() {
 		boolean res = false;
 		if(this.color == Color.WHITE) {
@@ -66,14 +66,35 @@ public abstract class Piece {
 		}
 		return res;
 	}
-	
-	
+
+
 	public void moveTo(Position destination) throws ChessMoveException{
-		this.position = destination;
+		if(this.isValidMove(destination))
+		{
+			this.board.setPiece(destination, this);
+			this.position = destination;
+		}
+		else
+		{
+			throw new ChessMoveException("Erreur : ", this.position, destination);
+		}
 	}
-	
-	
-	public abstract boolean isValidMove(Position destination);
-	
+
+
+	public boolean isValidMove(Position destination) {
+		boolean res = false;
+		if (board.getPiece(destination) == null)
+		{
+			res = true;
+		}
+		else if (board.getPiece(destination).getColor() != this.getColor())
+		{
+
+			res = true;	
+		}
+
+		return res;
+	}
+
 
 }

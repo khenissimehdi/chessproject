@@ -24,7 +24,18 @@ public final class Pawn extends Piece {
 	@Override
 	public boolean isValidMove(Position destination)
 	{
-		return true;
+		boolean res = super.isValidMove(destination);
+		if (res)
+		{
+			if (getPosition().isOnSameColumnAs(destination))
+			{
+				if (this.board.isPiecePresentOnSameColumnBetween(this.getPosition(), destination))
+				{
+					res = false;
+				}
+			}
+		}
+		return res;
 	}
 
 }

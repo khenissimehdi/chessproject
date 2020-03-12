@@ -19,6 +19,10 @@ import chess.util.Position;
 public final class Chessboard {
 
 	
+	public static void main(String[] args) {
+		
+	}
+	
 	private Piece[][] pieces;
 
 	
@@ -34,7 +38,7 @@ public final class Chessboard {
 		pieces[0][6] = new Knight(this, new Position(0,6), Color.WHITE);
 		pieces[0][7] = new Rook(this, new Position(0,7), Color.WHITE);
 		
-		pieces[1][0] = new Pawn(this, new Position(1,0), Color.WHITE);
+		/*
 		pieces[1][1] = new Pawn(this, new Position(1,1), Color.WHITE);
 		pieces[1][2] = new Pawn(this, new Position(1,2), Color.WHITE);
 		pieces[1][3] = new Pawn(this, new Position(1,3), Color.WHITE);
@@ -42,7 +46,8 @@ public final class Chessboard {
 		pieces[1][5] = new Pawn(this, new Position(1,5), Color.WHITE);
 		pieces[1][6] = new Pawn(this, new Position(1,6), Color.WHITE);
 		pieces[1][7] = new Pawn(this, new Position(1,7), Color.WHITE);
-
+		*/
+		
 		pieces[7][0] = new Rook(this, new Position(7,0), Color.BLACK);
 		pieces[7][1] = new Knight(this, new Position(7,1), Color.BLACK);
 		pieces[7][2] = new Bishop(this, new Position(7,2), Color.BLACK);
@@ -52,6 +57,7 @@ public final class Chessboard {
 		pieces[7][6] = new Knight(this, new Position(7,6), Color.BLACK);
 		pieces[7][7] = new Rook(this, new Position(7,7), Color.BLACK);
 		
+		/*
 		pieces[6][0] = new Pawn(this, new Position(6,0), Color.BLACK);
 		pieces[6][1] = new Pawn(this, new Position(6,1), Color.BLACK);
 		pieces[6][2] = new Pawn(this, new Position(6,2), Color.BLACK);
@@ -60,6 +66,7 @@ public final class Chessboard {
 		pieces[6][5] = new Pawn(this, new Position(6,5), Color.BLACK);
 		pieces[6][6] = new Pawn(this, new Position(6,6), Color.BLACK);
 		pieces[6][7] = new Pawn(this, new Position(6,7), Color.BLACK);
+		*/
 	}
 	
 
@@ -75,12 +82,11 @@ public final class Chessboard {
 
 	
 	public void setPiece(Position pos, Piece newPiece) {
-		try {
-			newPiece.moveTo(getPiece(pos).getPosition());
-		} catch (ChessMoveException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(newPiece.getPosition().getX() + " " + newPiece.getPosition().getY());
+		System.out.println(pos.getX() + " " + newPiece.getPosition().getY());
+
+		pieces[newPiece.getPosition().getX()][newPiece.getPosition().getY()] = null;
+		pieces[pos.getX()][pos.getY()] = newPiece;
 	}
 
 	

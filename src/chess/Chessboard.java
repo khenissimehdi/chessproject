@@ -19,10 +19,6 @@ import chess.util.Position;
 public final class Chessboard {
 
 	
-	public static void main(String[] args) {
-		
-	}
-	
 	private Piece[][] pieces;
 
 	
@@ -30,6 +26,7 @@ public final class Chessboard {
 		pieces = new Piece[8][8];
 		
 		pieces[0][0] = new Rook(this, new Position(0,0), Color.WHITE);
+		/*
 		pieces[0][1] = new Knight(this, new Position(0,1), Color.WHITE);
 		pieces[0][2] = new Bishop(this, new Position(0,2), Color.WHITE);
 		pieces[0][3] = new King(this, new Position(0,3), Color.WHITE);
@@ -38,7 +35,7 @@ public final class Chessboard {
 		pieces[0][6] = new Knight(this, new Position(0,6), Color.WHITE);
 		pieces[0][7] = new Rook(this, new Position(0,7), Color.WHITE);
 		
-		/*
+		
 		pieces[1][1] = new Pawn(this, new Position(1,1), Color.WHITE);
 		pieces[1][2] = new Pawn(this, new Position(1,2), Color.WHITE);
 		pieces[1][3] = new Pawn(this, new Position(1,3), Color.WHITE);
@@ -46,7 +43,7 @@ public final class Chessboard {
 		pieces[1][5] = new Pawn(this, new Position(1,5), Color.WHITE);
 		pieces[1][6] = new Pawn(this, new Position(1,6), Color.WHITE);
 		pieces[1][7] = new Pawn(this, new Position(1,7), Color.WHITE);
-		*/
+		
 		
 		pieces[7][0] = new Rook(this, new Position(7,0), Color.BLACK);
 		pieces[7][1] = new Knight(this, new Position(7,1), Color.BLACK);
@@ -57,7 +54,7 @@ public final class Chessboard {
 		pieces[7][6] = new Knight(this, new Position(7,6), Color.BLACK);
 		pieces[7][7] = new Rook(this, new Position(7,7), Color.BLACK);
 		
-		/*
+		
 		pieces[6][0] = new Pawn(this, new Position(6,0), Color.BLACK);
 		pieces[6][1] = new Pawn(this, new Position(6,1), Color.BLACK);
 		pieces[6][2] = new Pawn(this, new Position(6,2), Color.BLACK);
@@ -146,19 +143,31 @@ public final class Chessboard {
 	}
 
 	
+ 	public static void main(String[] args)
+ 	{
+ 		Chessboard chess = new Chessboard();
+ 		System.out.println(chess);
+ 	}
+ 	
+ 	
 	@Override
 	public String toString() {
 		String res = "";
 		int numLine = 7;
-
+		int printNumLine = 8;
+		
 		for (int line = 0; line <= 16; line++) {
 
-			int numRow = 7;
+			int numRow = 0;
 			if (line == 0) {
-				res += "┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓";
+				res += "    A   B   C   D   E   F   G   H  ";
+				res += "\n";
+				res += "  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓";
 				res += "\n";
 			} else if (line == 16) {
-				res += "┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛";
+				res += "  ┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛";
+				res += "\n";
+				res += "    A   B   C   D   E   F   G   H  ";
 				res += "\n";
 			} else {
 
@@ -166,7 +175,7 @@ public final class Chessboard {
 					if (line % 2 == 0) {
 
 						if (row == 0) {
-							res += "┣";
+							res += "  ┣";
 						} else if (row == 16) {
 							res += "┫";
 						} else if (row % 2 != 0) {
@@ -178,16 +187,20 @@ public final class Chessboard {
 					} else {
 
 						if (row == 0) {
+							res += printNumLine + " ";
 							res += "┃";
-						} else if (row == 14) {
-							res += "┃";
+						} else if (row == 16) {
+							res += "┃" + " " + printNumLine;
+							printNumLine--;
 						} else if (row % 2 != 0) {
-							if (getPiece(numLine, numRow) != null) {
-								res += " " + getPiece(numLine, numRow).getSymbol() + " ";
+							if (getPiece(numRow, numLine) != null) {
+								res += " ";
+								res += getPiece(numRow, numLine).getSymbol();
+								res += " ";
 							} else {
 								res += "   ";
 							}
-							numRow--;
+							numRow++;
 						} else {
 							res += "┃";
 						}

@@ -25,6 +25,7 @@ public final class Bishop extends Piece {
 	@Override
 	public boolean isValidMove(Position destination)
 	{
+		/*
 		boolean res = super.isValidMove(destination);
 		if (res)
 		{
@@ -37,6 +38,8 @@ public final class Bishop extends Piece {
 			}
 		}
 		return res;
+		*/
+		return true;
 	}
 
 }

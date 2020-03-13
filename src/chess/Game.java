@@ -49,9 +49,12 @@ public final class Game {
  				try {
  					System.out.println("[ " + game.getWhitePlayerName() + " ] - Position de la pièce à déplacer :");
  		 			Position start = new Position(sc.nextLine());
+
  		 			System.out.println("[ " + game.getWhitePlayerName() + " ] - Destination du déplacement :");
  		 			Position end = new Position(sc.nextLine());
+ 		 			
  		 			game.turn(start, end);
+ 		 			
  		 			error = false;
  				} catch (IllegalArgumentException e) {
  					System.out.print(e.getMessage() + "\n");
@@ -70,8 +73,10 @@ public final class Game {
  				try {
  					System.out.println("[ " + game.getBlackPlayerName() + " ] - Position de la pièce à déplacer :");
  		 			Position start = new Position(sc.nextLine());
+ 		 			
  		 			System.out.println("[ " + game.getBlackPlayerName() + " ] - Destination du déplacement :");
  		 			Position end = new Position(sc.nextLine());
+ 		 			
  		 			game.turn(start, end);
  		 			error = false;
  				} catch (IllegalArgumentException e) {

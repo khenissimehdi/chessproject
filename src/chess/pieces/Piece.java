@@ -69,7 +69,7 @@ public abstract class Piece {
 
 
 	public void moveTo(Position destination) throws ChessMoveException{
-		if(this.isValidMove(destination))
+		if(true)
 		{
 			this.board.setPiece(destination, this);
 			this.position = destination;

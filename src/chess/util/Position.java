@@ -21,7 +21,7 @@ public class Position {
 	
 	
 	/**
-	 * Constructeur de la clase position
+	 * Constructeur de la classe position
 	 * @param x Axe X
 	 * @param y Axe Y
 	 * @throws IllegalArgumentException

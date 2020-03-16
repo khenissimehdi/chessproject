@@ -4,10 +4,10 @@
 package chess.pieces;
 
 import chess.Chessboard;
-import chess.pieces.Piece;
 import chess.util.Color;
 import chess.util.Position;
 import chess.util.Symbol;
+
 /**
  * @author khen0002
  *
@@ -22,8 +22,7 @@ public final class King extends Piece {
 	}
 
 	@Override
-	public boolean isValidMove(Position destination)
-	{
+	public boolean isValidMove(Position destination) {
 		return true;
 	}
 

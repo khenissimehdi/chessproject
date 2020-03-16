@@ -1,14 +1,14 @@
 package chess.util;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
 class ColorTest {
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void colorTest() {
+		assertEquals(Color.WHITE.toString(), "WHITE");
+		assertEquals(Color.BLACK.toString(), "BLACK");
 	}
 
 }

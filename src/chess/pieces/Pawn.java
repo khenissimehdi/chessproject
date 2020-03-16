@@ -4,10 +4,10 @@
 package chess.pieces;
 
 import chess.Chessboard;
-import chess.pieces.Piece;
 import chess.util.Color;
 import chess.util.Position;
 import chess.util.Symbol;
+
 /**
  * @author khen0002
  *
@@ -22,19 +22,13 @@ public final class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean isValidMove(Position destination)
-	{
-		boolean res = super.isValidMove(destination);
-		if (res)
-		{
-			if (getPosition().isOnSameColumnAs(destination))
-			{
-				if (this.board.isPiecePresentOnSameColumnBetween(this.getPosition(), destination))
-				{
-					res = false;
-				}
-			}
+	public boolean isValidMove(Position destination) {
+		boolean res = false;
+
+		if (getPosition().isOnSameColumnAs(destination)) {
+			res = true;
 		}
+
 		return res;
 	}
 

@@ -2,9 +2,10 @@ package chess.pieces;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.Test;
-
+import chess.Chessboard;
+import chess.util.ChessMoveException;
+import chess.util.Color;
 import chess.util.Position;
 
 class RookTest {
@@ -12,7 +13,7 @@ class RookTest {
 	@Test
 	public void isValidMoveLineTest() {
 		Piece[][] pieces = new Piece[8][8];
-		Chessboard board ;
+		Chessboard board = new Chessboard();
 		pieces[0][0] = new Rook(board, new Position(0, 0), Color.WHITE);
 		pieces[1][0] = null;
 		assertEquals(true,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
@@ -20,7 +21,7 @@ class RookTest {
 	@Test
 	public void isNotValidMoveLineTest() {
 		Piece[][] pieces = new Piece[8][8];
-		Chessboard board ;
+		Chessboard board = new Chessboard();
 		pieces[0][0] = new Rook(board, new Position(0, 0), Color.WHITE);
 		pieces[1][1] = null;
 		assertEquals(false,pieces[0][0].isValidMove(pieces[1][1].getPosition()));
@@ -28,7 +29,7 @@ class RookTest {
 	@Test
 	public void isNotValidMoveLineWhiteVSWhiteTest() {
 		Piece[][] pieces = new Piece[8][8];
-		Chessboard board ;
+		Chessboard board = new Chessboard();
 		pieces[0][0] = new Rook(board, new Position(0, 0), Color.WHITE);
 		pieces[1][0] = new Rook(board, new Position(1, 0), Color.WHITE);
 		assertEquals(false,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
@@ -36,7 +37,7 @@ class RookTest {
 	@Test
 	public void isNotValidMoveLineWhiteVSBlackTest() {
 		Piece[][] pieces = new Piece[8][8];
-		Chessboard board ;
+		Chessboard board = new Chessboard();
 		pieces[0][0] = new Rook(board, new Position(0, 0), Color.WHITE);
 		pieces[1][0] = new Rook(board, new Position(1, 0), Color.BLACK);
 		assertEquals(false,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
@@ -44,7 +45,7 @@ class RookTest {
 	@Test
 	public void isValidMoveColumnTest() {
 		Piece[][] pieces = new Piece[8][8];
-		Chessboard board ;
+		Chessboard board = new Chessboard();
 		pieces[2][0] = new Rook(board, new Position(0, 0), Color.WHITE);
 		pieces[1][0] = null;
 		assertEquals(true,pieces[2][0].isValidMove(pieces[1][0].getPosition()));
@@ -52,7 +53,7 @@ class RookTest {
 	@Test
 	public void isNotValidMoveColumnWhiteVSWhiteTest() {
 		Piece[][] pieces = new Piece[8][8];
-		Chessboard board ;
+		Chessboard board = new Chessboard();
 		pieces[2][0] = new Rook(board, new Position(0, 0), Color.WHITE);
 		pieces[1][0] = new Rook(board, new Position(1, 0), Color.WHITE);
 		assertEquals(false,pieces[2][0].isValidMove(pieces[1][0].getPosition()));
@@ -60,7 +61,7 @@ class RookTest {
 	@Test
 	public void chessMoveExceptionTest() {
 		Piece[][] pieces = new Piece[8][8];
-		Chessboard board ;
+		Chessboard board = new Chessboard();
 		pieces[0][5] = new Rook(board, new Position(0, 0), Color.WHITE);
 		pieces[1][0] = null;
 		try {

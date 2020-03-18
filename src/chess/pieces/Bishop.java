@@ -18,7 +18,7 @@ public final class Bishop extends Piece {
 	 * 
 	 */
 	public Bishop(Chessboard board, Position position, Color color) {
-		super(board, position, color, color + "_BISHOP",
+		super(board, position, color, color + " BISHOP",
 				(color == Color.WHITE) ? Symbol.WHITE_BISHOP : Symbol.BLACK_BISHOP);
 	}
 

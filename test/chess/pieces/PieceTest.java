@@ -2,9 +2,10 @@ package chess.pieces;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.Test;
-
+import chess.Chessboard;
+import chess.util.ChessMoveException;
+import chess.util.Color;
 import chess.util.Position;
 import chess.util.Symbol;
 
@@ -15,44 +16,59 @@ class PieceTest {
 	
 	@Test
 	public void getColorTest() {
-		Piece p = new Pawn(this, new Position(6, 0), Color.BLACK);
-		assertEquals(Color.BLACK,p.getColor())
+		Chessboard board = new Chessboard();
+		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
+		assertEquals(Color.BLACK,piece.getColor());
 	}
+	
 	@Test
 	public void getNameTest() {
-		Piece p = new Pawn(this, new Position(6, 0), Color.BLACK);
-		assertEquals("_PAWN",p.getName());
+		Chessboard board = new Chessboard();
+		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
+		assertEquals("_PAWN",piece.getName());
 	}
+	
 	@Test
 	public void getPositionTest() {
-		Piece p = new Pawn(this, new Position(6, 0), Color.BLACK);
+		Chessboard board = new Chessboard();
+		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
 		Position pos = new Position(6, 0);
-		assertEquals(pos,p.getPosition());
+		assertEquals(pos,piece.getPosition());
 	}
+	
 	@Test
 	public void getSymbolTest() {
-		Piece p = new Pawn(this, new Position(6, 0), Color.BLACK);
-		assertEquals(Symbol.BLACK_PAWN,p.getSymbol());
+		Chessboard board = new Chessboard();
+		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
+		assertEquals(Symbol.BLACK_PAWN,piece.getSymbol());
 	}
+	
 	@Test
 	public void isBlackTest() {
-		Piece p = new Pawn(this, new Position(6, 0), Color.BLACK);
-		assertEquals(true,p.isBlack());
+		Chessboard board = new Chessboard();
+		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
+		assertEquals(true,piece.isBlack());
 	}
+	
 	@Test
 	public void isWhiteTest() {
-		Piece p = new Pawn(this, new Position(6, 0), Color.WHITE);
-		boolean res = true;
-		assertEquals(true,p.isWhite());
+		Chessboard board = new Chessboard();
+		Piece piece = new Pawn(board, new Position(6, 0), Color.WHITE);
+		assertEquals(true,piece.isWhite());
 	}
+	
 	@Test
 	public void moveToTest() {
 		Piece[][] pieces = new Piece[8][8];
-		Chessboard board ;
+		Chessboard board = new Chessboard();
 		Position pos = new Position(1,0);
 		pieces[0][0] = new Pawn(board, new Position(0, 0), Color.WHITE);
-		pieces[1][0] = null;
-		pieces[0][0].moveTo(pieces[1][0].getPosition());
+		try
+		{
+			pieces[0][0].moveTo(pieces[1][0].getPosition());
+			fail("ChessMoveException");
+		}
+		catch (ChessMoveException e) { }
 		assertEquals(pos,pieces[0][0].getPosition());
 	}
 

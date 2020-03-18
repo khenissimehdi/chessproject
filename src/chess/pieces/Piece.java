@@ -18,7 +18,7 @@ public abstract class Piece {
 	private String name;
 	private Position position;
 	private char symbol;
-	protected Chessboard board;
+	protected final Chessboard board;
 
 	public Piece(Chessboard board, Position position, Color color, String name, char symbol) {
 		this.board = board;

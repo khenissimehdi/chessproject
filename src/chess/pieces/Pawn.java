@@ -18,7 +18,7 @@ public final class Pawn extends Piece {
 	 * 
 	 */
 	public Pawn(Chessboard board, Position position, Color color) {
-		super(board, position, color, color + "_PAWN", (color == Color.WHITE) ? Symbol.WHITE_PAWN : Symbol.BLACK_PAWN);
+		super(board, position, color, color + " PAWN", (color == Color.WHITE) ? Symbol.WHITE_PAWN : Symbol.BLACK_PAWN);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public final class Queen extends Piece {
 	 * 
 	 */
 	public Queen(Chessboard board, Position position, Color color) {
-		super(board, position, color, color + "_QUEEN",
+		super(board, position, color, color + " QUEEN",
 				(color == Color.WHITE) ? Symbol.WHITE_QUEEN : Symbol.BLACK_QUEEN);
 	}
 

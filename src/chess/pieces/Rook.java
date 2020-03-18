@@ -18,7 +18,7 @@ public final class Rook extends Piece {
 	 * 
 	 */
 	public Rook(Chessboard board, Position position, Color color) {
-		super(board, position, color, color + "_ROOK", (color == Color.WHITE) ? Symbol.WHITE_ROOK : Symbol.BLACK_ROOK);
+		super(board, position, color, color + " ROOK", (color == Color.WHITE) ? Symbol.WHITE_ROOK : Symbol.BLACK_ROOK);
 	}
 
 	@Override

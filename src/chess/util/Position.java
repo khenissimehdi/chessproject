@@ -69,15 +69,9 @@ public class Position {
 
 		boolean res = false;
 
-		if (obj == null) {
+		Position pos = (Position) obj;
+		if ((getX() != pos.getX()) || (getY() != pos.getY())) {
 			res = false;
-		} else if (this == obj) {
-			res = true;
-		} else {
-			Position pos = (Position) obj;
-			if ((getX() != pos.getX()) || (getY() != pos.getY())) {
-				res = false;
-			}
 		}
 
 		return res;
@@ -134,8 +128,9 @@ public class Position {
 	public String toAlgebraicNotation() {
 		StringBuilder res = new StringBuilder(2);
 		char valueX = (char) (this.x + 'A');
+		int valueY = this.y + 1;
 		res.append(Character.toString(valueX));
-		res.append(Integer.toString(this.y + 1));
+		res.append(Integer.toString(valueY));
 		return res.toString();
 	}
 
@@ -144,7 +139,7 @@ public class Position {
 	 */
 	@Override
 	public String toString() {
-		return "   ";
+		return toAlgebraicNotation();
 	}
 
 }

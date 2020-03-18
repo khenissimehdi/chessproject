@@ -14,32 +14,32 @@ import chess.util.Position;
  */
 public final class Game {
 
-	private String blackPlayerName;
 	private Chessboard board;
 	private Color currentColor;
+	private String blackPlayerName;
 	private String whitePlayerName;
 
 	public Game(String blackPlayerName, String whitePlayerName) {
-		this.blackPlayerName = blackPlayerName;
-		this.whitePlayerName = whitePlayerName;
 		this.board = new Chessboard();
 		this.currentColor = Color.WHITE;
+		this.blackPlayerName = blackPlayerName;
+		this.whitePlayerName = whitePlayerName;
 	}
 
 	/**
 	 * @return the blackPlayerName
 	 */
 	public String getBlackPlayerName() {
-		return blackPlayerName;
+		return this.blackPlayerName;
 	}
 
 	/**
 	 * @return the currentColor
 	 */
 	public Color getCurrentColor() {
-		return currentColor;
+		return this.currentColor;
 	}
-
+		
 	/**
 	 * @return the whitePlayerName
 	 */
@@ -52,8 +52,6 @@ public final class Game {
 			throw new ChessMoveException("La case de départ est vide", start, end);
 		} else if (this.board.getPiece(start).getColor() != this.getCurrentColor()) {
 			throw new ChessMoveException("La case de départ contient une pièce de l'adversaire", start, end);
-		} else if (!this.board.getPiece(start).isValidMove(end)) {
-			throw new ChessMoveException("Le déplacement est invalide", start, end);
 		} else {
 			this.board.getPiece(start).moveTo(end);
 		}
@@ -61,21 +59,24 @@ public final class Game {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-
+		
 		System.out.println("Veuillez saisir votre nom (pions noirs) :");
 		String blackPlayerName = sc.nextLine();
-
+		
 		System.out.println("Veuillez saisir votre nom (pions blancs) :");
 		String whitePlayerName = sc.nextLine();
 
 		Game game = new Game(blackPlayerName, whitePlayerName);
-		boolean error = true;
+		boolean isTheEndOfTheGame = false;
 
 		System.out.println(game.board);
 
-		if (game.currentColor == Color.WHITE) {
-			while (error) {
+		while (isTheEndOfTheGame != true) {
+
+			if (game.currentColor == Color.WHITE) {
+				
 				try {
+					
 					System.out.println("[ " + game.getWhitePlayerName() + " ] - Position de la pièce à déplacer :");
 					Position start = new Position(sc.nextLine());
 
@@ -83,21 +84,19 @@ public final class Game {
 					Position end = new Position(sc.nextLine());
 
 					game.turn(start, end);
-
-					error = false;
+					game.currentColor = Color.BLACK;
+					
 				} catch (IllegalArgumentException e) {
 					System.out.print(e.getMessage() + "\n");
-					error = true;
 				} catch (ChessMoveException e) {
 					System.out.print(e.getMessage() + "\n");
-					error = true;
 				}
 			}
-		}
 
-		else if (game.currentColor == Color.BLACK) {
-			while (error) {
+			else if (game.currentColor == Color.BLACK) {
+				
 				try {
+					
 					System.out.println("[ " + game.getBlackPlayerName() + " ] - Position de la pièce à déplacer :");
 					Position start = new Position(sc.nextLine());
 
@@ -105,19 +104,23 @@ public final class Game {
 					Position end = new Position(sc.nextLine());
 
 					game.turn(start, end);
-					error = false;
+					game.currentColor = Color.WHITE;
+					
 				} catch (IllegalArgumentException e) {
 					System.out.print(e.getMessage() + "\n");
-					error = true;
 				} catch (ChessMoveException e) {
 					System.out.print(e.getMessage() + "\n");
-					error = true;
 				}
 			}
+			
+			
+			System.out.println(game.board);
+			game.board.printHistoric();
+			
 		}
-		System.out.println(game.board);
 
 		sc.close();
+
 	}
 
 }

@@ -1,126 +1,189 @@
 package chess.pieces;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 import chess.Chessboard;
-import chess.util.ChessMoveException;
 import chess.util.Color;
 import chess.util.Position;
 
 class KingTest {
-	
+
 	@Test
-	public void isValidMoveLineTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void kingTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new King(board, new Position(0, 0), Color.WHITE);
-		assertEquals(true,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
+		Position posPiece = new Position("A1");
+		Color colorPiece = Color.BLACK;
+		King piece = new King(board, posPiece, colorPiece);
+		assertEquals(posPiece, piece.getPosition());
+		assertEquals(colorPiece, piece.getColor());
 	}
 	
 	@Test
-	public void isNotValidMovelineTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveFrontColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new King(board, new Position(0, 0), Color.WHITE);
-		assertEquals(false,pieces[0][0].isValidMove(pieces[7][0].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("D5");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(piece.isValidMove(posDest));
 	}
 	
 	@Test
-	public void isNotValidMoveLineWhiteVSWhiteTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveFrontColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new King(board, new Position(0, 0), Color.WHITE);
-		pieces[1][0] = new Pawn(board, new Position(1, 0), Color.WHITE);;
-		assertEquals(false,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("D6");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(piece.isValidMove(posDest));
 	}
 	
 	@Test
-	public void isValidMoveLineWhiteVSBlackTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveFrontLeftDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new King(board, new Position(0, 0), Color.WHITE);
-		pieces[1][0] = new Pawn(board, new Position(1, 0), Color.BLACK);;
-		assertEquals(true,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("C5");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(piece.isValidMove(posDest));
 	}
 	
 	@Test
-	public void isValidMoveColumnTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveFrontLeftDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][0] = new King(board, new Position(0, 0), Color.WHITE);
-		assertEquals(true,pieces[2][0].isValidMove(pieces[1][0].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("B6");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(piece.isValidMove(posDest));
 	}
 	
 	@Test
-	public void isNotValidMoveColumnTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveFrontRightDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][0] = new King(board, new Position(0, 0), Color.WHITE);
-		assertEquals(false,pieces[2][0].isValidMove(pieces[7][0].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("E5");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isNotValidMoveColumnWhiteVSWhiteTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveFrontRightDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][0] = new King(board, new Position(0, 0), Color.WHITE);
-		pieces[7][0] = new Pawn(board, new Position(7, 0), Color.WHITE);
-		assertEquals(false,pieces[2][0].isValidMove(pieces[7][0].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("F6");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isValidMoveColumnWhiteVSBlackTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveBackColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][0] = new King(board, new Position(0, 0), Color.WHITE);
-		pieces[7][0] = new Pawn(board, new Position(7, 0), Color.BLACK);
-		assertEquals(false,pieces[2][0].isValidMove(pieces[7][0].getPosition()));
+		Position posStart = new Position("D5");
+		Position posDest = new Position("D3");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isValidMoveDiagonalTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveBackLeftDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][2] = new King(board, new Position(2, 2), Color.WHITE);
-		assertEquals(true,pieces[2][2].isValidMove(pieces[1][1].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("D3");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isNotValidMoveDiagonalTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveBackRightDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][2] = new King(board, new Position(2, 2), Color.WHITE);
-		assertEquals(false,pieces[2][2].isValidMove(pieces[7][7].getPosition()));
+		Position posStart = new Position("E5");
+		Position posDest = new Position("D4");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isNotValidMoveDiagonalWhiteVSWhiteTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveBackRightDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][2] = new King(board, new Position(0, 0), Color.WHITE);
-		pieces[3][3] =  new Pawn(board, new Position(3, 3), Color.WHITE);;
-		assertEquals(false,pieces[2][2].isValidMove(pieces[3][3].getPosition()));
+		Position posStart = new Position("E5");
+		Position posDest = new Position("C3");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isValidMoveDiagonalWhiteVSBlackTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveRightLineTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][2] = new King(board, new Position(0, 0), Color.WHITE);
-		pieces[3][3] =  new Pawn(board, new Position(3, 3), Color.BLACK);;
-		assertEquals(true,pieces[2][2].isValidMove(pieces[3][3].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("H4");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void chessMoveExceptionTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveRightLineTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][5] = new King(board, new Position(0, 0), Color.WHITE);
-		try {
-			pieces[0][5].moveTo(pieces[1][0].getPosition());
-			fail("ChessMoveException");
-		}catch(ChessMoveException e) {}
+		Position posStart = new Position("D4");
+		Position posDest = new Position("E5");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isNotValidMoveLeftLineTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("A4");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isValidMoveLeftLineTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("C4");
+		
+		King piece = new King(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 }

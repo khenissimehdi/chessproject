@@ -24,24 +24,22 @@ public final class Pawn extends Piece {
 	@Override
 	public boolean isValidMove(Position destination) {
 		boolean res = false;
-		
-		if (getPosition().getManhattanDistance(destination) == 1) {
-			if (getPosition().isOnSameColumnAs(destination))
-			{
+
+		if (getPosition().getManhattanDistance(destination) == 1 && destination.getY() > getPosition().getY()) {
+			if (getPosition().isOnSameColumnAs(destination)) {
 				if (board.getPiece(destination) == null)
-					res = true;
-			}
-		}
-		else if (getPosition().getManhattanDistance(destination) == 2)
-		{
-			if (getPosition().isOnSameDiagonalAs(destination))
-			{
-				if (board.getPiece(destination) != null)
-					if (board.getPiece(destination).getColor() != board.getPiece(this.getPosition()).getColor())
 						res = true;
 			}
+		} else if (getPosition().getManhattanDistance(destination) == 2) {
+			if (getPosition().isOnSameDiagonalAs(destination)) {
+				if (board.getPiece(destination) != null) {
+					if (board.getPiece(destination).getColor() != board.getPiece(this.getPosition()).getColor()) {
+							res = true;
+					}
+				}
+			}
 		}
-		
+
 		return res;
 	}
 

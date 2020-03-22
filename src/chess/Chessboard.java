@@ -131,9 +131,9 @@ public final class Chessboard {
 					+ " ne se trouve pas sur la même diagonale que la pièce en " + end);
 		}
 		int addY = (start.getY() > end.getY()) ? -1 : 1;
-		int addX = (start.getY() > end.getY()) ? -1 : 1;
-		int x = start.getX() + addX;
+		int addX = (start.getX() > end.getX()) ? -1 : 1;
 		int y = start.getY() + addY;
+		int x = start.getX() + addX;
 		while (x != end.getX() && y != end.getY()) {
 			if (!(this.getPiece(x, y) == null)) {
 				res = true;

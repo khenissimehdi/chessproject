@@ -1,67 +1,83 @@
 package chess.pieces;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 import chess.Chessboard;
-import chess.util.ChessMoveException;
 import chess.util.Color;
 import chess.util.Position;
 
 class PawnTest {
-
+	
 	@Test
-	public void isValidMoveTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void pawnTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Pawn(board, new Position(0, 0), Color.WHITE);
-		assertEquals(true,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
+		Position posPiece = new Position("A1");
+		Color colorPiece = Color.BLACK;
+		Pawn piece = new Pawn(board, posPiece, colorPiece);
+		assertEquals(posPiece, piece.getPosition());
+		assertEquals(colorPiece, piece.getColor());
 	}
 	
 	@Test
-	public void isnotValidMoveTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMovePushMoreThanOneCaseColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Pawn(board, new Position(0, 0), Color.WHITE);
-		assertEquals(false,pieces[0][0].isValidMove(pieces[3][0].getPosition()));
+		Position posStart = new Position("A2");
+		Position posDest = new Position("A4");
+		Pawn piece = new Pawn(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isnotValidMoveWhiteVSWhiteTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveBackOneCaseColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Pawn(board, new Position(0, 0), Color.WHITE);
-		pieces[2][0] = new Pawn(board, new Position(2, 0), Color.WHITE);;
-		assertEquals(true,pieces[0][0].isValidMove(pieces[2][0].getPosition()));
+		Position posStart = new Position("A4");
+		Position posDest = new Position("A3");
+		Pawn piece = new Pawn(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isnotValidMoveObstacleTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveDiagonalNullTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Pawn(board, new Position(0, 0), Color.WHITE);
-		pieces[1][0] = new Pawn(board, new Position(2, 0), Color.WHITE);
-		assertEquals(false,pieces[0][0].isValidMove(pieces[2][0].getPosition()));
+		Position posStart = new Position("A2");
+		Position posDest = new Position("B3");
+		
+		Pawn pieceWhite = new Pawn(board, posStart, Color.BLACK);
+		board.setPiece(posStart, pieceWhite);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void isValidMoveWhiteVSBlackTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveDiagonalMeTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Pawn(board, new Position(0, 0), Color.WHITE);
-		pieces[1][1] = new Pawn(board, new Position(1, 1), Color.BLACK);;
-		assertEquals(true,pieces[0][0].isValidMove(pieces[1][1].getPosition()));
+		Position posStart = new Position("A2");
+		Position posDest = new Position("B3");
+		
+		Pawn pieceWhite = new Pawn(board, posStart, Color.BLACK);
+		board.setPiece(posStart, pieceWhite);
+		
+		Pawn pieceBlack = new Pawn(board, posDest, Color.BLACK);
+		board.setPiece(posDest, pieceBlack);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void chessMoveExceptionTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveDiagonalEnemyTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][5] = new Pawn(board, new Position(0, 0), Color.WHITE);
-		try {
-			pieces[0][5].moveTo(pieces[1][0].getPosition());
-			fail("ChessMoveException");
-		}catch(ChessMoveException e) {}
+		Position posStart = new Position("A2");
+		Position posDest = new Position("B3");
+		
+		Pawn pieceWhite = new Pawn(board, posStart, Color.BLACK);
+		board.setPiece(posStart, pieceWhite);
+		
+		Pawn pieceBlack = new Pawn(board, posDest, Color.WHITE);
+		board.setPiece(posDest, pieceBlack);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 }

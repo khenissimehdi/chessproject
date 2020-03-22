@@ -1,99 +1,165 @@
 package chess.pieces;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 import chess.Chessboard;
-import chess.util.ChessMoveException;
 import chess.util.Color;
 import chess.util.Position;
 
 class QueenTest {
 
 	@Test
-	public void isValidMoveLineTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void queenTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[1][0] = null;
-		assertEquals(true,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
-	}
-	@Test
-	public void isNotValidMoveTest() {
-		Piece[][] pieces = new Piece[8][8];
-		Chessboard board = new Chessboard();
-		pieces[0][0] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[2][1] = null;
-		assertEquals(false,pieces[0][0].isValidMove(pieces[2][1].getPosition()));
-	}
-	@Test
-	public void isNotValidMoveLineWhiteVSWhiteTest() {
-		Piece[][] pieces = new Piece[8][8];
-		Chessboard board = new Chessboard();
-		pieces[0][0] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[1][0] = new Pawn(board, new Position(1, 0), Color.WHITE);;
-		assertEquals(false,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
-	}
-	@Test
-	public void isValidMoveLineWhiteVSBlackTest() {
-		Piece[][] pieces = new Piece[8][8];
-		Chessboard board = new Chessboard();
-		pieces[0][0] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[1][0] = new Pawn(board, new Position(1, 0), Color.BLACK);;
-		assertEquals(true,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
-	}
-	@Test
-	public void isValidMoveColumnTest() {
-		Piece[][] pieces = new Piece[8][8];
-		Chessboard board = new Chessboard();
-		pieces[2][0] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[1][0] = null;
-		assertEquals(true,pieces[2][0].isValidMove(pieces[1][0].getPosition()));
+		Position posPiece = new Position("A1");
+		Color colorPiece = Color.BLACK;
+		Queen piece = new Queen(board, posPiece, colorPiece);
+		assertEquals(posPiece, piece.getPosition());
+		assertEquals(colorPiece, piece.getColor());
 	}
 	
 	@Test
-	public void isNotValidMoveColumnWhiteVSWhiteTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveFrontColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][0] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[7][0] = new Pawn(board, new Position(7, 0), Color.WHITE);
-		assertEquals(false,pieces[2][0].isValidMove(pieces[7][0].getPosition()));
-	}
-	@Test
-	public void isValidMoveColumnWhiteVSBlackTest() {
-		Piece[][] pieces = new Piece[8][8];
-		Chessboard board = new Chessboard();
-		pieces[2][0] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[7][0] = new Pawn(board, new Position(7, 0), Color.BLACK);
-		assertEquals(true,pieces[2][0].isValidMove(pieces[7][0].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("D6");
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(piece.isValidMove(posDest));
 	}
 	
 	@Test
-	public void isNotValidMoveDiagonalWhiteVSWhiteTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveFrontLeftDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][2] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[3][3] =  new Pawn(board, new Position(3, 3), Color.WHITE);;
-		assertEquals(false,pieces[2][2].isValidMove(pieces[3][3].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("B6");
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(piece.isValidMove(posDest));
 	}
+	
 	@Test
-	public void isValidMoveDiagonalWhiteVSBlackTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveFrontRightDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[2][2] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[3][3] =  new Pawn(board, new Position(3, 3), Color.BLACK);;
-		assertEquals(true,pieces[2][2].isValidMove(pieces[3][3].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("F6");
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
 	}
+	
 	@Test
-	public void chessMoveExceptionTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveBackColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][1] = new Queen(board, new Position(0, 0), Color.WHITE);
-		pieces[0][2] = new Queen(board, new Position(0, 2), Color.BLACK);;
-		try {
-			pieces[0][1].moveTo(pieces[0][1].getPosition());
-			fail("ChessMoveException");
-		}catch(ChessMoveException e) {}
+		Position posStart = new Position("D5");
+		Position posDest = new Position("D3");
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isValidMoveBackLeftDiagonalTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("D3");
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isValidMoveBackRightDiagonalTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("E3");
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isValidMoveRightLineTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("H4");
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isValidMoveLeftLineTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("A4");
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isNotValidMoveLeftLinePieceBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("H4");
+		Position posBetween = new Position("F4");
+
+		Queen pieceBetween = new Queen(board, posBetween, Color.BLACK);
+		board.setPiece(posBetween, pieceBetween);
+
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isNotValidMoveFrontRightDiagonalPieceBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("F6");
+		Position posBetween = new Position("E5");
+
+		Queen pieceBetween = new Queen(board, posBetween, Color.BLACK);
+		board.setPiece(posBetween, pieceBetween);
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isNotValidMoveBackLeftDiagonalPieceBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("E5");
+		Position posDest = new Position("D3");
+		Position posBetween = new Position("D4");
+
+		Queen pieceBetween = new Queen(board, posBetween, Color.BLACK);
+		board.setPiece(posBetween, pieceBetween);
+		
+		Queen piece = new Queen(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 
 }

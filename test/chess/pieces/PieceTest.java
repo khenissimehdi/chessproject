@@ -1,7 +1,6 @@
 package chess.pieces;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 import chess.Chessboard;
 import chess.util.ChessMoveException;
@@ -22,7 +21,7 @@ class PieceTest {
 	public void getNameTest() {
 		Chessboard board = new Chessboard();
 		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
-		assertEquals("_PAWN",piece.getName());
+		assertEquals("BLACK PAWN",piece.getName());
 	}
 	
 	@Test
@@ -33,32 +32,36 @@ class PieceTest {
 	}
 	
 	@Test
-	public void isBlackTest() {
+	public void isNotBlackTest() {
 		Chessboard board = new Chessboard();
-		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
-		assertEquals(true,piece.isBlack());
+		Piece piece = new Pawn(board, new Position(6, 0), Color.WHITE);
+		assertFalse(piece.isBlack());
 	}
 	
 	@Test
 	public void isWhiteTest() {
 		Chessboard board = new Chessboard();
 		Piece piece = new Pawn(board, new Position(6, 0), Color.WHITE);
-		assertEquals(true,piece.isWhite());
+		assertTrue(piece.isWhite());
+	}
+	
+	@Test
+	public void isNotWhiteTest() {
+		Chessboard board = new Chessboard();
+		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
+		assertFalse(piece.isWhite());
 	}
 	
 	@Test
 	public void moveToTest() {
-		Piece[][] pieces = new Piece[8][8];
 		Chessboard board = new Chessboard();
-		Position pos = new Position(1,0);
-		pieces[0][0] = new Pawn(board, new Position(0, 0), Color.WHITE);
-		try
-		{
-			pieces[0][0].moveTo(pieces[1][0].getPosition());
-			fail("ChessMoveException");
-		}
-		catch (ChessMoveException e) { }
-		assertEquals(pos,pieces[0][0].getPosition());
+		Position posStart = new Position("A2");
+		Position posDest = new Position("A3");
+		try {
+			board.getPiece(posStart).moveTo(posDest);
+		} catch (ChessMoveException e) {}
+		assertTrue(board.getPiece(posStart) == null);
+		assertTrue(board.getPiece(posDest) != null);
 	}
 
 }

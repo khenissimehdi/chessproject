@@ -9,57 +9,86 @@ import chess.util.Position;
 class GameTest {
 
 	@Test
-	void TurnTest() {
-		Game g = new Game("Mehdi","Charles");
-		assertEquals(Color.WHITE,g.getCurrentColor());
+	void gameTest() {
+		String black = "Mehdi";
+		String white = "Charles";
+		Game game = new Game(black,white);
+		assertEquals(game.getCurrentColor(), Color.WHITE);
+		assertEquals(game.getBlackPlayerName(), black);
+		assertEquals(game.getWhitePlayerName(), white);
+	}
+	
+	@Test
+	void gameBlackPlayerTest() {
+		Game game = new Game("Mehdi","Charles");
+		assertEquals(game.getBlackPlayerName(),"Mehdi");
+	}
+	
+	@Test
+	void gameWhitePlayerTest() {
+		Game game = new Game("Mehdi","Charles");
+		assertEquals(game.getWhitePlayerName(),"Charles");
+	}
+	
+	@Test
+	void getCurrentColorStartGameTest() {
+		Game game = new Game("Mehdi","Charles");
+		assertEquals(game.getCurrentColor(),Color.WHITE);
+		System.out.println(game.getCurrentColor());
+	}
+	
+	@Test
+	void turnNormalTest() {
+		Game game = new Game("Mehdi","Charles");
+		Position start = new Position("G1");
+		Position end = new Position("F3");
 		try {
-			g.turn(new Position(0,0),new Position(0,3));
-			assertEquals(Color.BLACK,g.getCurrentColor());
-		} catch (ChessMoveException exception){}
+			game.turn(start, end);
+		} catch (ChessMoveException exception) {}
+	}
+	
+	@Test
+	void turnErrorTest() {
+		Game game = new Game("Mehdi","Charles");
+		Position start = new Position("G1");
+		Position end = new Position("G3");
+		try {
+			game.turn(start, end);
+			fail("Erreur le cavalier ne se déplace pas en ligne droite.");
+		} catch (ChessMoveException exception) {}
+	}
+	
+	@Test
+	void turnExceptionStartNullTest() {
+		Game game = new Game("Mehdi","Charles");
+		Position start = new Position("A3");
+		Position end = new Position("A4");
+		try {
+			game.turn(start, end);
+			fail("Erreur la case de départ est vide.");
+		} catch (ChessMoveException exception) {}
+	}
+	
+	@Test
+	void turnExceptionYourPieceOnDestinationTest() {
+		Game game = new Game("Mehdi","Charles");
+		Position start = new Position("A1");
+		Position end = new Position("A2");
+		try {
+			game.turn(start, end);
+			fail("Erreur la case de destination contient une de vos pièces.");
+		} catch (ChessMoveException exception) {}
 	}
 
 	@Test
-	void NullStartTurnTest() {
-		Game g = new Game("Mehdi","Charles");
+	void turnExceptionEnemyPieceOnStartTest() {
+		Game game = new Game("Mehdi","Charles");
+		Position start = new Position("H7");
+		Position end = new Position("H6");
 		try {
-			g.turn(null,new Position(0,7));
-			fail("Fail");
-		} catch(ChessMoveException e) {}
-		
+			game.turn(start, end);
+			fail("Erreur la case de départ contient une pièce adverse.");
+		} catch (ChessMoveException exception) {}
 	}
-	@Test
-	void PositionIsTakenTurnTest() {
-		Game g = new Game("Mehdi","Charles");
-		try {
-			g.turn(new Position(0,0),new Position(0,7));
-			fail("Fail");
-		} catch(ChessMoveException e) {}
-		
-	}
-	@Test
-	void getBlackPlayerNameTest() {
-		Game g = new Game("Mehdi","Charles");
-		assertEquals("Mehdi",g.getBlackPlayerName());
-	}
-	@Test
-	void getWhitePlayerNameTest() {
-		Game g = new Game("Mehdi","Charles");
-		assertEquals("Charles",g.getWhitePlayerName());
-	}
-	@Test
-	void getCurrentColorTest() {
-		Game g = new Game("Mehdi","Charles");
-		assertEquals(Color.WHITE,g.getCurrentColor());
-	}
-	@Test
-	void getCurrentColorAfterTurnTest() {
-		Game g = new Game("Mehdi","Charles");
-		try {
-			g.turn(new Position(0,0),new Position(0,3));
-			assertEquals(Color.BLACK,g.getCurrentColor());
-		} catch (ChessMoveException exception){}
-		assertEquals(Color.BLACK,g.getCurrentColor());
-	}
-
-
+	
 }

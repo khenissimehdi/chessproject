@@ -2,7 +2,6 @@ package chess;
 
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
-import chess.util.ChessMoveException;
 import chess.util.Color;
 import chess.util.Position;
 import chess.pieces.Piece;
@@ -10,6 +9,16 @@ import chess.pieces.Rook;
 
 class ChessboardTest {
 	
+	@Test
+	void chessboardTest() {
+		Chessboard board = new Chessboard();
+		assertEquals(board.getHistoricSize(), 0);
+		assertEquals(board.getPiece(0, 0).getName(), "WHITE ROOK");
+		assertEquals(board.getPiece(7, 0).getName(), "WHITE ROOK");
+		assertEquals(board.getPiece(0, 7).getName(), "BLACK ROOK");
+		assertEquals(board.getPiece(7, 7).getName(), "BLACK ROOK");
+		
+	}
 	
 	@Test
 	void getPieceXYTest() {
@@ -32,7 +41,7 @@ class ChessboardTest {
 	@Test
 	void getPieceXYNullTest() {
 		Chessboard board = new Chessboard();
-		assertEquals(null, board.getPiece(4,4));
+		assertEquals(board.getPiece(4,4), null);
 	}
 	
 	@Test
@@ -47,7 +56,7 @@ class ChessboardTest {
 	void isNotPiecePresentOnSameColumnBetweenTest() {
 		Chessboard board = new Chessboard();
 		Position start = new Position(0, 2);
-		Position end = new Position(0, 7);
+		Position end = new Position(0, 6);
 		assertFalse(board.isPiecePresentOnSameColumnBetween(start, end));
 	}
 
@@ -55,7 +64,7 @@ class ChessboardTest {
 	void isPiecePresentOnSameColumnBetweenLowStartTest() {
 		Chessboard board = new Chessboard();
 		Position start = new Position(0, 2);
-		Position end = new Position(0, 7);
+		Position end = new Position(0, 6);
 		Position posPiece = new Position(0, 4);
 		Piece piece = new Rook(board, posPiece, Color.BLACK);
 		board.setPiece(posPiece, piece);
@@ -141,12 +150,20 @@ class ChessboardTest {
 		Chessboard board = new Chessboard();
 		Piece piece = new Rook(board, new Position(0, 1), Color.BLACK);
 		Position pos = new Position(2, 2);
+		assertEquals(board.getPiece(pos), null);
 		board.setPiece(pos, piece);
 		assertEquals(piece.getName(), board.getPiece(pos).getName());
 	}
 	
 	@Test
-	void toStringTest() {
+	void addHistoric() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 4);
+		Position end = new Position(7, 4);
+		Piece piece = new Rook(board, start, Color.BLACK);
+		assertEquals(board.getHistoricSize(), 0);
+		board.addHistoric(piece, end);
+		assertEquals(board.getHistoricSize(), 1);
 	}
 
 }

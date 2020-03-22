@@ -3,7 +3,6 @@ package chess.util;
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
-import chess.pieces.King;
 
 class PositionTest {
 
@@ -25,7 +24,7 @@ class PositionTest {
 	@Test
 	void positionExceptionTest() {
 		try {
-			Position pos = new Position(-2,9);
+			new Position(-2,9);
 		    fail("Bad position");
 		  } catch (IllegalArgumentException exception) {}
 	}
@@ -33,7 +32,7 @@ class PositionTest {
 	@Test
 	void positionAlgebraicErrorLengthTest() {
 		try {
-			Position pos = new Position("E");
+			new Position("E");
 		    fail("La chaine de caractères ne possèdent pas deux caractères");
 		  } catch (IllegalArgumentException exception) {}
 	}
@@ -41,7 +40,7 @@ class PositionTest {
 	@Test
 	void positionAlgebraicErrorFirstCharTest() {
 		try {
-			Position pos = new Position("Z4");
+			new Position("Z4");
 		    fail("Le premier caractère (Z) n'est pas comprit entre A et H");
 		  } catch (IllegalArgumentException exception) {}
 	}
@@ -49,7 +48,7 @@ class PositionTest {
 	@Test
 	void positionAlgebraicErrorSecondCharInfTest() {
 		try {
-			Position pos = new Position("B9");
+			new Position("B9");
 		    fail("Le deuxième caractère (9) est supérieur à 8");
 		  } catch (IllegalArgumentException exception) {}
 	}
@@ -57,7 +56,7 @@ class PositionTest {
 	@Test
 	void positionAlgebraicErrorSecondCharSupTest() {
 		try {
-			Position pos = new Position("B0");
+			new Position("B0");
 		    fail("Le deuxième caractère (0) est inférieur à 1");
 		  } catch (IllegalArgumentException exception) {}
 	}
@@ -92,11 +91,19 @@ class PositionTest {
 	}
 	
 	@Test
-	void getManhattanDistanceTest() {
+	void getManhattanDistanceRandomOneTest() {
 		Position posStart = new Position(0,0);
 		Position posEnd = new Position(4,3);
 		int dist = posStart.getManhattanDistance(posEnd);
 		assertEquals(dist, 7);
+	}
+	
+	@Test
+	void getManhattanDistanceRandomTwoTest() {
+		Position posStart = new Position("A2");
+		Position posEnd = new Position("A3");
+		int dist = posStart.getManhattanDistance(posEnd);
+		assertEquals(dist, 1);
 	}
 	
 	@Test
@@ -176,6 +183,12 @@ class PositionTest {
 		Position posStart = new Position("A1");
 		Position posEnd = new Position("H5");
 		assertFalse(posStart.isOnSameDiagonalAs(posEnd));
+	}
+	
+	@Test
+	public void toStringTest() {
+		Position pos1 = new Position(0,0);
+		assertEquals("A1", pos1.toString());
 	}
 	
 	@Test

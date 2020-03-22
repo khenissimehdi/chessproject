@@ -1,58 +1,149 @@
 package chess.pieces;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 import chess.Chessboard;
-import chess.util.ChessMoveException;
 import chess.util.Color;
 import chess.util.Position;
 
 class BishopTest {
 
 	@Test
-	public void isValidMoveTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void bishopTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Bishop(board, new Position(0, 0), Color.WHITE);
-		assertEquals(true,pieces[0][0].isValidMove(pieces[1][1].getPosition()));
+		Position posPiece = new Position("A1");
+		Color colorPiece = Color.BLACK;
+		Bishop piece = new Bishop(board, posPiece, colorPiece);
+		assertEquals(posPiece, piece.getPosition());
+		assertEquals(colorPiece, piece.getColor());
 	}
 	
 	@Test
-	public void isValidMoveWhiteVersusBlackTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveFrontColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Bishop(board, new Position(0, 0), Color.WHITE);
-		pieces[1][1] = new Bishop(board, new Position(1, 1), Color.BLACK);;
-		assertEquals(true,pieces[0][0].isValidMove(pieces[1][1].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("D6");
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(piece.isValidMove(posDest));
 	}
 	
 	@Test
-	public void isNotValidMoveWhiteVersusWhiteTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveFrontLeftDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Bishop(board, new Position(0, 0), Color.WHITE);
-		pieces[1][1] = new Bishop(board, new Position(1, 1), Color.WHITE);;
-		assertEquals(false,pieces[0][0].isValidMove(pieces[1][1].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("B6");
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(piece.isValidMove(posDest));
 	}
 	
 	@Test
-	public void isNotValidMoveTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isValidMoveFrontRightDiagonalTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][0] = new Bishop(board, new Position(0, 0), Color.WHITE);
-		assertEquals(false,pieces[0][0].isValidMove(pieces[1][0].getPosition()));
+		Position posStart = new Position("D4");
+		Position posDest = new Position("F6");
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
 	}
 	
 	@Test
-	public void chessMoveExceptionTest() {
-		Piece[][] pieces = new Piece[8][8];
+	public void isNotValidMoveBackColumnTest() {
 		Chessboard board = new Chessboard();
-		pieces[0][5] = new Bishop(board, new Position(0, 0), Color.WHITE);
-		try {
-			pieces[0][5].moveTo(pieces[1][0].getPosition());
-			fail("ChessMoveException");
-		} catch(ChessMoveException e) {}
+		Position posStart = new Position("D5");
+		Position posDest = new Position("D3");
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isNotValidMoveBackLeftDiagonalTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("D3");
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isValidMoveBackRightDiagonalTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("E3");
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertTrue(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isNotValidMoveRightLineTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("H4");
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isNotValidMoveLeftLineTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("A4");
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
+	}
+
+	@Test
+	public void isNotValidMoveFrontRightDiagonalPieceBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("D4");
+		Position posDest = new Position("F6");
+		Position posBetween = new Position("E5");
+
+		Bishop pieceBetween = new Bishop(board, posBetween, Color.BLACK);
+		board.setPiece(posBetween, pieceBetween);
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
+	}
+	
+	@Test
+	public void isNotValidMoveBackLeftDiagonalPieceBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position posStart = new Position("E5");
+		Position posDest = new Position("D3");
+		Position posBetween = new Position("D4");
+
+		Bishop pieceBetween = new Bishop(board, posBetween, Color.BLACK);
+		board.setPiece(posBetween, pieceBetween);
+		
+		Bishop piece = new Bishop(board, posStart, Color.BLACK);
+		board.setPiece(posStart, piece);
+		
+		assertFalse(board.getPiece(posStart).isValidMove(posDest));
 	}
 
 }

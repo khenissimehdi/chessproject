@@ -26,11 +26,15 @@ public final class Rook extends Piece {
 		boolean res = false;
 
 		if (getPosition().isOnSameColumnAs(destination))
+		{
 			if (!board.isPiecePresentOnSameColumnBetween(getPosition(), destination))
-				res = true;
+				res = true;	
+		}
 		else if (getPosition().isOnSameLineAs(destination))
+		{
 			if (!board.isPiecePresentOnSameLineBetween(getPosition(), destination))
 				res = true;
+		}
 
 		return res;
 	}

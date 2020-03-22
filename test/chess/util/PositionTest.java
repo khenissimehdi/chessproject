@@ -5,14 +5,6 @@ import org.junit.jupiter.api.Test;
 
 
 class PositionTest {
-
-	
-	@Test
-	void positionDefaultTest() {
-		Position pos = new Position();
-		assertEquals(pos.getX(), 0);
-		assertEquals(pos.getY(), 0);
-	}
 	
 	@Test
 	void positionNormalTest() {

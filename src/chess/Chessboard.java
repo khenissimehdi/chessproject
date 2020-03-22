@@ -12,15 +12,20 @@ import chess.util.Color;
 import chess.util.Position;
 
 /**
- * @author khen0002
- *
+ * Classe Chessboard
+ * Classe représentant un échiquier lors d'une partie d'échecs
  */
-
 public final class Chessboard {
 
+	// Tableau de pièces représentant les cases de l'échiquier (une case vide vaut null)
 	private Piece[][] pieces;
+	// Liste représentant l'ensemble des coups joués
 	private ArrayList<String> historic;
 
+	
+	/**
+	 * Constructeur par défaut
+	 */
 	public Chessboard() {
 		pieces = new Piece[8][8];
 		this.historic = new ArrayList<String>();
@@ -60,22 +65,58 @@ public final class Chessboard {
 		pieces[5][7] = new Bishop(this, new Position(5, 7), Color.BLACK);
 		pieces[6][7] = new Knight(this, new Position(6, 7), Color.BLACK);
 		pieces[7][7] = new Rook(this, new Position(7, 7), Color.BLACK);
-
+		
 	}
 
+	/*
+	 * Accesseur qui donne l'ensemble des pièces encore présent sur le tableau
+	 * @return ArrayList des pièces sur le plateau
+	 */
+	public ArrayList<Piece> getAllPieceOnChessboard() {
+		ArrayList<Piece> listOfAllPieces = new ArrayList <>();
+		for (Piece[] linePiece : this.pieces)
+		{
+			for (Piece piece : linePiece)
+			{
+				if (piece != null) {
+					listOfAllPieces.add(piece);
+				}
+			}
+		}
+		return listOfAllPieces;
+	}
+	
+	/**
+	 * Accesseur de la pièce de la case (x,y) de l'échiquier
+	 * @param x Abscisse de la case (0 à 7)
+	 * @param y Ordonnée de la case (0 à 7)
+	 * @return Pièce située sur la case ou null si la case est vide
+	 */
 	public Piece getPiece(int x, int y) {
 		return pieces[x][y];
 
 	}
 
+	/**
+	 * Accesseur de la pièce de la case indiquée par pos
+	 * @param pos Position de la case
+	 * @return Pièce située sur la case ou null si la case est vide
+	 */
 	public Piece getPiece(Position pos) {
 		return pieces[pos.getX()][pos.getY()];
 	}
 
+	/**
+	 * Accesseur de la taille de l'historique
+	 * @return Taille de l'historique
+	 */
 	public int getHistoricSize() {
 		return this.historic.size();
 	}
 
+	/**
+	 * Méthode qui affiche l'historique des coups joués
+	 */
 	public void printHistoric() {
 		System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
 		System.out.println("                            HISTORIQUE                             ");
@@ -89,6 +130,11 @@ public final class Chessboard {
 		System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
 	}
 
+	/**
+	 * Méthode qui ajoute d'une entrée à l'historique
+	 * @param piece Pièce que l'on déplace
+	 * @param dest Position à laquelle on déplace la pièce
+	 */
 	public void addHistoric(Piece piece, Position dest) {
 		StringBuilder str = new StringBuilder();
 		str.append(getHistoricSize() + 1);
@@ -105,7 +151,15 @@ public final class Chessboard {
 		this.historic.add(str.toString());
 	}
 
-	public boolean isPiecePresentOnSameColumnBetween(Position start, Position end) {
+
+	/**
+	 * Méthode qui teste la présence d'une pièce sur la colonne comprise entre les positions start et end (exclues)
+	 * @param start Première extrémité
+	 * @param end Seconde extrémité
+	 * @return True s'il y a une pièce sur la colonne comprise entre les positions start et end (exclues), false sinon
+	 * @throws IllegalArgumentException Si les positions start et end ne sont pas sur la même colonne
+	 */
+	public boolean isPiecePresentOnSameColumnBetween(Position start, Position end) throws IllegalArgumentException {
 		boolean res = false;
 		if (!(start.isOnSameColumnAs(end))) {
 			throw new IllegalArgumentException("La pièce se trouvant en " + start
@@ -124,7 +178,14 @@ public final class Chessboard {
 		return res;
 	}
 
-	public boolean isPiecePresentOnSameDiagonalBetween(Position start, Position end) {
+	/**
+	 * Méthode qui teste la présence d'une pièce sur la diagonale comprise entre les positions start et end (exclues)
+	 * @param start Première extrémité
+	 * @param end Seconde extrémité
+	 * @return True s'il y a une pièce sur la diagonale comprise entre les positions start et end (exclues), false sinon
+	 * @throws IllegalArgumentException Si les positions start et end ne sont pas sur la même diagonale
+	 */
+	public boolean isPiecePresentOnSameDiagonalBetween(Position start, Position end) throws IllegalArgumentException {
 		boolean res = false;
 		if (!(start.isOnSameDiagonalAs(end))) {
 			throw new IllegalArgumentException("La pièce se trouvant en " + start
@@ -144,7 +205,14 @@ public final class Chessboard {
 		return res;
 	}
 
-	public boolean isPiecePresentOnSameLineBetween(Position start, Position end) {
+	/**
+	 * Méthode qui teste  la présence d'une pièce sur la ligne comprise entre les positions start et end (exclues)
+	 * @param start Première extrémité
+	 * @param end Seconde extrémité
+	 * @return True s'il y a une pièce sur la ligne comprise entre les positions start et end (exclues), false sinon.
+	 * @throws IllegalArgumentException Si les positions start et end ne sont pas sur la même ligne
+	 */
+	public boolean isPiecePresentOnSameLineBetween(Position start, Position end) throws IllegalArgumentException {
 		boolean res = false;
 		if (!(start.isOnSameLineAs(end))) {
 			throw new IllegalArgumentException(
@@ -162,12 +230,20 @@ public final class Chessboard {
 		return res;
 	}
 
+	/**
+	 * Méthode qui remplace la pièce située sur la case indiquée
+	 * @param pos position de la case de destination
+	 * @param newPiece nouvelle pièce de la case
+	 */
 	public void setPiece(Position pos, Piece newPiece) {
 		addHistoric(newPiece, pos);
 		pieces[newPiece.getPosition().getX()][newPiece.getPosition().getY()] = null;
 		pieces[pos.getX()][pos.getY()] = newPiece;
 	}
 
+	/**
+	 * Retourne une chaîne de caractères représentant l'échiquier
+	 */
 	@Override
 	public String toString() {
 		StringBuilder res = new StringBuilder("\n");
@@ -218,5 +294,6 @@ public final class Chessboard {
 		res.append('\n');
 		return res.toString();
 	}
+
 
 }

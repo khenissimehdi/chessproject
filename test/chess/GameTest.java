@@ -1,7 +1,13 @@
 package chess;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
+
+import chess.pieces.King;
+import chess.pieces.Piece;
 import chess.util.ChessMoveException;
 import chess.util.Color;
 import chess.util.Position;
@@ -34,7 +40,6 @@ class GameTest {
 	void getCurrentColorStartGameTest() {
 		Game game = new Game("Mehdi","Charles");
 		assertEquals(game.getCurrentColor(),Color.WHITE);
-		System.out.println(game.getCurrentColor());
 	}
 	
 	@Test
@@ -89,6 +94,28 @@ class GameTest {
 			game.turn(start, end);
 			fail("Erreur la case de départ contient une pièce adverse.");
 		} catch (ChessMoveException exception) {}
+	}
+	
+	@Test
+	void isNotEchecTest() {
+		Game game = new Game("Mehdi","Charles");
+		assertFalse(game.isEchec(Color.WHITE));
+	}
+	
+	@Test
+	void isEchecTest() {
+		Game game = new Game("Mehdi","Charles");
+		try {
+			game.turn(new Position("E2"), new Position("E3"));
+			game.turn(new Position("E7"), new Position("E6"));
+			game.turn(new Position("E1"), new Position("E2"));
+			game.turn(new Position("D8"), new Position("E7"));
+			game.turn(new Position("E2"), new Position("B5"));
+			game.turn(new Position("H7"), new Position("H6"));
+			game.turn(new Position("B5"), new Position("D7"));
+			assertTrue(game.isEchec(Color.BLACK));
+
+		} catch (IllegalArgumentException | ChessMoveException exception) {}
 	}
 	
 }

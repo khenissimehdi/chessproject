@@ -1,19 +1,17 @@
-/**
- * 
- */
 package chess.util;
 
 /**
- * Class ChessMoveException.java
+ * Classe ChessMoveException
+ * Lancée lorsqu'un déplacement est invalide.
  */
 public class ChessMoveException extends java.lang.Exception {
 
 	/**
-	 * Constructeur
+	 * Constructeur de l'exception
 	 * 
-	 * @param message          - détails de l'exception
-	 * @param startingPosition - position de la case de départ du déplacement
-	 * @param destination      - position de la case de destination du déplacement
+	 * @param message Détails de l'exception
+	 * @param startingPosition Position de la case de départ du déplacement
+	 * @param destination Position de la case de destination du déplacement
 	 */
 	public ChessMoveException(String message, Position startingPosition, Position destination) {
 		super(" ‼ " + message + " ( " + startingPosition + " → " + destination + " )");

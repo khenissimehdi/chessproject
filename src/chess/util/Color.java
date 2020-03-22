@@ -1,10 +1,8 @@
-/**
- * 
- */
 package chess.util;
 
 /**
- * Class Color.java
+ * Classe Color
+ * Représente les couleurs des pièces du jeu d'échecs.
  */
 public enum Color {
 

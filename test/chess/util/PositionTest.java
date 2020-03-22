@@ -3,6 +3,8 @@ package chess.util;
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
+import chess.pieces.King;
+
 class PositionTest {
 
 	
@@ -98,6 +100,22 @@ class PositionTest {
 	}
 	
 	@Test
+	void getManhattanDistanceOneCaseColumnTest() {
+		Position posStart = new Position("A1");
+		Position posEnd = new Position("A2");
+		int dist = posStart.getManhattanDistance(posEnd);
+		assertEquals(dist, 1);
+	}
+	
+	@Test
+	void getManhattanDistanceOneCaseDiagonalTest() {
+		Position posStart = new Position("A1");
+		Position posEnd = new Position("B2");
+		int dist = posStart.getManhattanDistance(posEnd);
+		assertEquals(dist, 2);
+	}
+	
+	@Test
 	void getXTest() {
 		Position pos = new Position(3,5);
 		assertEquals(pos.getX(), 3);
@@ -116,8 +134,49 @@ class PositionTest {
 		assertTrue(posCord.equals(posAlg));
 	}
 	
+	@Test
+	void isOnSameColumnAsTest() {
+		Position posStart = new Position("A1");
+		Position posEnd = new Position("A8");
+		assertTrue(posStart.isOnSameColumnAs(posEnd));
+	}
+	
+	@Test
+	void isNotOnSameColumnAsTest() {
+		Position posStart = new Position("A1");
+		Position posEnd = new Position("H8");
+		assertFalse(posStart.isOnSameColumnAs(posEnd));
+	}
+
+	
+	@Test
+	void isOnSameLineAsTest() {
+		Position posStart = new Position("A1");
+		Position posEnd = new Position("H8");
+		assertFalse(posStart.isOnSameLineAs(posEnd));
+	}
+	
+	@Test
+	void isNotOnSameLineAsTest() {
+		Position posStart = new Position("A1");
+		Position posEnd = new Position("H1");
+		assertTrue(posStart.isOnSameLineAs(posEnd));
+	}
 	
 	
+	@Test
+	void isOnSameDiagonalAsTest() {
+		Position posStart = new Position("A1");
+		Position posEnd = new Position("H8");
+		assertTrue(posStart.isOnSameDiagonalAs(posEnd));
+	}
+	
+	@Test
+	void isNotOnSameDiagonalAsTest() {
+		Position posStart = new Position("A1");
+		Position posEnd = new Position("H5");
+		assertFalse(posStart.isOnSameDiagonalAs(posEnd));
+	}
 	
 	@Test
 	public void toAlgebraicNotationTest() {

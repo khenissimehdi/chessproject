@@ -34,25 +34,23 @@ public final class Chessboard {
 		pieces[6][0] = new Knight(this, new Position(6, 0), Color.WHITE);
 		pieces[7][0] = new Rook(this, new Position(7, 0), Color.WHITE);
 
-		/*
-		 * pieces [0][1] = new Pawn(this, new Position(1, 0), Color.WHITE); pieces
-		 * [1][1] = new Pawn(this, new Position(1, 1), Color.WHITE); pieces [2][1] = new
-		 * Pawn(this, new Position(1, 2), Color.WHITE); pieces [3][1] = new Pawn(this,
-		 * new Position(1, 3), Color.WHITE); pieces [4][1] = new Pawn(this, new
-		 * Position(1, 4), Color.WHITE); pieces [5][1] = new Pawn(this, new Position(1,
-		 * 5), Color.WHITE); pieces [6][1] = new Pawn(this, new Position(1, 6),
-		 * Color.WHITE); pieces [7][1] = new Pawn(this, new Position(1, 7),
-		 * Color.WHITE);
-		 * 
-		 * pieces [0][6] = new Pawn(this, new Position(6, 0), Color.BLACK); pieces
-		 * [1][6] = new Pawn(this, new Position(6, 1), Color.BLACK); pieces [2][6] = new
-		 * Pawn(this, new Position(6, 2), Color.BLACK); pieces [3][6] = new Pawn(this,
-		 * new Position(6, 3), Color.BLACK); pieces [4][6] = new Pawn(this, new
-		 * Position(6, 4), Color.BLACK); pieces [5][6] = new Pawn(this, new Position(6,
-		 * 5), Color.BLACK); pieces [6][6] = new Pawn(this, new Position(6, 6),
-		 * Color.BLACK); pieces [7][6] = new Pawn(this, new Position(6, 7),
-		 * Color.BLACK);
-		 */
+		pieces[0][1] = new Pawn(this, new Position(0, 1), Color.WHITE);
+		pieces[1][1] = new Pawn(this, new Position(1, 1), Color.WHITE);
+		pieces[2][1] = new Pawn(this, new Position(2, 1), Color.WHITE);
+		pieces[3][1] = new Pawn(this, new Position(3, 1), Color.WHITE);
+		pieces[4][1] = new Pawn(this, new Position(4, 1), Color.WHITE);
+		pieces[5][1] = new Pawn(this, new Position(5, 1), Color.WHITE);
+		pieces[6][1] = new Pawn(this, new Position(6, 1), Color.WHITE);
+		pieces[7][1] = new Pawn(this, new Position(7, 1), Color.WHITE);
+
+		pieces[0][6] = new Pawn(this, new Position(0, 6), Color.BLACK);
+		pieces[1][6] = new Pawn(this, new Position(1, 6), Color.BLACK);
+		pieces[2][6] = new Pawn(this, new Position(2, 6), Color.BLACK);
+		pieces[3][6] = new Pawn(this, new Position(3, 6), Color.BLACK);
+		pieces[4][6] = new Pawn(this, new Position(4, 6), Color.BLACK);
+		pieces[5][6] = new Pawn(this, new Position(5, 6), Color.BLACK);
+		pieces[6][6] = new Pawn(this, new Position(6, 6), Color.BLACK);
+		pieces[7][6] = new Pawn(this, new Position(7, 6), Color.BLACK);
 
 		pieces[0][7] = new Rook(this, new Position(0, 7), Color.BLACK);
 		pieces[1][7] = new Knight(this, new Position(1, 7), Color.BLACK);
@@ -115,14 +113,14 @@ public final class Chessboard {
 		}
 		int add = (start.getY() > end.getY()) ? -1 : 1;
 		int y = start.getY() + add;
-		
+
 		while (y != end.getY()) {
 			if (!(this.getPiece(start.getX(), y) == null)) {
 				res = true;
 			}
 			y += add;
 		}
-		
+
 		return res;
 	}
 

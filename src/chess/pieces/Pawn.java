@@ -28,7 +28,7 @@ public final class Pawn extends Piece {
 		if (getPosition().getManhattanDistance(destination) == 1) {
 			if (getPosition().isOnSameColumnAs(destination))
 			{
-				if (board.getPiece(destination).equals(null))
+				if (board.getPiece(destination) == null)
 					res = true;
 			}
 		}
@@ -36,7 +36,7 @@ public final class Pawn extends Piece {
 		{
 			if (getPosition().isOnSameDiagonalAs(destination))
 			{
-				if (!board.getPiece(destination).equals(null))
+				if (board.getPiece(destination) != null)
 					if (board.getPiece(destination).getColor() != board.getPiece(this.getPosition()).getColor())
 						res = true;
 			}

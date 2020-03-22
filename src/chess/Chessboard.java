@@ -54,13 +54,13 @@ public final class Chessboard {
 		 * Color.BLACK);
 		 */
 
-		pieces[0][7] = new Rook(this, new Position(7, 0), Color.BLACK);
-		pieces[1][7] = new Knight(this, new Position(7, 1), Color.BLACK);
-		pieces[2][7] = new Bishop(this, new Position(7, 2), Color.BLACK);
-		pieces[3][7] = new King(this, new Position(7, 3), Color.BLACK);
-		pieces[4][7] = new Queen(this, new Position(7, 4), Color.BLACK);
-		pieces[5][7] = new Bishop(this, new Position(7, 5), Color.BLACK);
-		pieces[6][7] = new Knight(this, new Position(7, 6), Color.BLACK);
+		pieces[0][7] = new Rook(this, new Position(0, 7), Color.BLACK);
+		pieces[1][7] = new Knight(this, new Position(1, 7), Color.BLACK);
+		pieces[2][7] = new Bishop(this, new Position(2, 7), Color.BLACK);
+		pieces[3][7] = new King(this, new Position(3, 7), Color.BLACK);
+		pieces[4][7] = new Queen(this, new Position(4, 7), Color.BLACK);
+		pieces[5][7] = new Bishop(this, new Position(5, 7), Color.BLACK);
+		pieces[6][7] = new Knight(this, new Position(6, 7), Color.BLACK);
 		pieces[7][7] = new Rook(this, new Position(7, 7), Color.BLACK);
 
 	}

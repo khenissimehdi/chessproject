@@ -23,7 +23,19 @@ public final class King extends Piece {
 
 	@Override
 	public boolean isValidMove(Position destination) {
-		return true;
+		boolean res = false;
+
+		if (getPosition().getManhattanDistance(destination) == 1)
+		{
+			if (getPosition().isOnSameColumnAs(destination) || getPosition().isOnSameLineAs(destination))
+				res = true;
+		}
+		else if (getPosition().getManhattanDistance(destination) == 2)
+		{
+			if (getPosition().isOnSameDiagonalAs(destination))
+				res = true;
+		}
+		return res;
 	}
 
 }

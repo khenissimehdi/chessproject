@@ -24,7 +24,19 @@ public final class Queen extends Piece {
 
 	@Override
 	public boolean isValidMove(Position destination) {
-		return true;
+		boolean res = false;
+
+		if (getPosition().isOnSameColumnAs(destination))
+			if (!board.isPiecePresentOnSameColumnBetween(getPosition(), destination))
+				res = true;
+		else if (getPosition().isOnSameLineAs(destination))
+			if (!board.isPiecePresentOnSameLineBetween(getPosition(), destination))
+				res = true;
+		else if (getPosition().isOnSameDiagonalAs(destination))
+			if (!board.isPiecePresentOnSameDiagonalBetween(getPosition(), destination))
+				res = true;
+
+		return res;
 	}
 
 }

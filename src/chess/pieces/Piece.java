@@ -63,7 +63,7 @@ public abstract class Piece {
 			this.board.setPiece(destination, this);
 			this.position = destination;
 		} else {
-			throw new ChessMoveException("Déplacement impossible : ", this.position, destination);
+			throw new ChessMoveException("Déplacement impossible : " + this.symbol, this.position, destination);
 		}
 	}
 

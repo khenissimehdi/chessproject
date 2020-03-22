@@ -28,7 +28,7 @@ public class Position {
 	 */
 	public Position(int x, int y) throws IllegalArgumentException {
 		if (x < 0 || x > 7 || y < 0 || y > 7) {
-			throw new IllegalArgumentException("Position invalide : " + x + "," + y);
+			throw new IllegalArgumentException(" ‼ Position invalide : " + x + "," + y);
 		}
 		this.x = x;
 		this.y = y;
@@ -37,7 +37,7 @@ public class Position {
 	public Position(String algebraicNotation) {
 
 		if (algebraicNotation.length() != 2) {
-			throw new IllegalArgumentException("La chaine de caractères ne possèdent pas deux caractères");
+			throw new IllegalArgumentException(" ‼ Position invalide : la chaine de caractères ne possèdent pas deux caractères.");
 		}
 
 		char pos1 = algebraicNotation.charAt(0);
@@ -45,16 +45,16 @@ public class Position {
 
 		if (pos1 < 'A' || pos1 > 'H') {
 			throw new IllegalArgumentException(
-					"Le premier caractère (" + algebraicNotation.charAt(0) + ") n'est pas comprit entre A et H");
+					" ‼ Position invalide : le premier caractère (" + algebraicNotation.charAt(0) + ") n'est pas comprit entre A et H.");
 		}
 
 		if (pos2 < '1') {
 			throw new IllegalArgumentException(
-					"Le deuxième caractère (" + algebraicNotation.charAt(1) + ") est inférieur à 1");
+					" ‼ Position invalide : le deuxième caractère (" + algebraicNotation.charAt(1) + ") est inférieur à 1.");
 		}
 		if (pos2 > '8') {
 			throw new IllegalArgumentException(
-					"Le deuxième caractère (" + algebraicNotation.charAt(1) + ") est supérieur à 8");
+					" ‼ Position invalide : le deuxième caractère (" + algebraicNotation.charAt(1) + ") est supérieur à 8.");
 		}
 
 		this.x = pos1 - 'A';

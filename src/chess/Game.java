@@ -46,27 +46,23 @@ public final class Game {
 	}
 
 	public void turn(Position start, Position end) throws ChessMoveException {
+		
 		if (this.board.getPiece(start) == null)
 			throw new ChessMoveException("La case de départ est vide.", start, end);
 		else if (this.board.getPiece(start).getColor() != this.getCurrentColor())
 			throw new ChessMoveException("La case de départ contient une pièce adverse.", start, end);
-		else
-			this.board.getPiece(start).moveTo(end);
+		
+		if (this.board.getPiece(end) != null)
+			if (this.board.getPiece(end).getColor() == this.getCurrentColor())
+				throw new ChessMoveException("La case de destination est contient une de vos pièces.", start, end);
+
+		this.board.getPiece(start).moveTo(end);
 	}
 
-	/*
 	public static void clear() {
-		try {
-			if (System.getProperty("os.name").startsWith("Windows"))
-				Runtime.getRuntime().exec("cls");
-			else
-				Runtime.getRuntime().exec("clear");
-		} catch (Exception exception) {
-			for (int i = 0; i < 100; i++)
-				System.out.println("\n");
-		}
+		for (int i = 0; i < 20; i++)
+			System.out.println("\n");
 	}
-	*/
 
 	public static void main(String[] args) {
 		System.out.println("# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
@@ -78,15 +74,15 @@ public final class Game {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println(" > Veuillez saisir votre nom (Noirs  ⚑ ) :");
-		String blackPlayerName = sc.nextLine();
+		String blackPlayerName = sc.nextLine().toUpperCase();
 
 		System.out.println(" > Veuillez saisir votre nom (Blancs ⚐ ) :");
-		String whitePlayerName = sc.nextLine();
+		String whitePlayerName = sc.nextLine().toUpperCase();
 
 		Game game = new Game(blackPlayerName, whitePlayerName);
-		
-		//clear();
 
+		clear();
+		
 		while (isTheEndOfTheGame != true) {
 			
 			System.out.println(game.board);
@@ -114,10 +110,13 @@ public final class Game {
 					Position end = new Position(sc.nextLine());
 					game.turn(start, end);
 					game.currentColor = Color.BLACK;
+					clear();
 
 				} catch (IllegalArgumentException exception) {
+					clear();
 					System.out.print(exception.getMessage() + "\n");
 				} catch (ChessMoveException exception) {
+					clear();
 					System.out.print(exception.getMessage() + "\n");
 				}
 				
@@ -133,9 +132,11 @@ public final class Game {
 					{
 						/* On a choisi un switch en se disant que dans une version futur on pourrait ajouter des commandes comme REGLES */
 					    case "HISTORIQUE" :
+					    	clear();
 							System.out.println("\n");
 					    	game.board.printHistoric();
 							System.out.println("\n");
+							System.out.println(game.board);
 					    	System.out.println(" > " + game.getBlackPlayerName() + " (⚑) : Lieu actuel de la pièce à déplacer ? (exemple : A1)");
 					    	choice = sc.nextLine();
 					}
@@ -145,10 +146,13 @@ public final class Game {
 					Position end = new Position(sc.nextLine());
 					game.turn(start, end);
 					game.currentColor = Color.WHITE;
+					clear();
 
 				} catch (IllegalArgumentException exception) {
+					clear();
 					System.out.print(exception.getMessage() + "\n");
 				} catch (ChessMoveException exception) {
+					clear();
 					System.out.print(exception.getMessage() + "\n");
 				}
 				

@@ -24,7 +24,14 @@ public final class Knight extends Piece {
 
 	@Override
 	public boolean isValidMove(Position destination) {
-		return true;
+		boolean res = false;
+
+		if (getPosition().getManhattanDistance(destination) == 3) {
+			if (!getPosition().isOnSameColumnAs(destination) && !getPosition().isOnSameLineAs(destination)
+					&& !getPosition().isOnSameDiagonalAs(destination))
+				res = true;
+		}
+		return res;
 	}
 
 }

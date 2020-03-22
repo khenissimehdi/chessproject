@@ -47,7 +47,7 @@ public final class Chessboard {
 		pieces[5][1] = new Pawn(this, new Position(5, 1), Color.WHITE);
 		pieces[6][1] = new Pawn(this, new Position(6, 1), Color.WHITE);
 		pieces[7][1] = new Pawn(this, new Position(7, 1), Color.WHITE);
-
+		
 		pieces[0][6] = new Pawn(this, new Position(0, 6), Color.BLACK);
 		pieces[1][6] = new Pawn(this, new Position(1, 6), Color.BLACK);
 		pieces[2][6] = new Pawn(this, new Position(2, 6), Color.BLACK);
@@ -56,7 +56,7 @@ public final class Chessboard {
 		pieces[5][6] = new Pawn(this, new Position(5, 6), Color.BLACK);
 		pieces[6][6] = new Pawn(this, new Position(6, 6), Color.BLACK);
 		pieces[7][6] = new Pawn(this, new Position(7, 6), Color.BLACK);
-
+		
 		pieces[0][7] = new Rook(this, new Position(0, 7), Color.BLACK);
 		pieces[1][7] = new Knight(this, new Position(1, 7), Color.BLACK);
 		pieces[2][7] = new Bishop(this, new Position(2, 7), Color.BLACK);

@@ -2,8 +2,12 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import chess.pieces.Bishop;
 import chess.pieces.King;
+import chess.pieces.Knight;
+import chess.pieces.Pawn;
 import chess.pieces.Piece;
+import chess.pieces.Queen;
 import chess.pieces.Rook;
 import chess.util.ChessMoveException;
 import chess.util.Color;
@@ -36,6 +40,11 @@ public final class Game {
 		this.whitePlayerName = whitePlayerName;
 	}
 
+	public Chessboard getBoard() {
+
+		return this.board;
+	}
+	
 	/**
 	 * Accesseur du nom du joueur ayant les pièces noires
 	 * 
@@ -71,38 +80,98 @@ public final class Game {
 	 */
 	public boolean isEchec(Color color) {
 		boolean res = false;
-
 		ArrayList<Piece> listPiecesEnemy = new ArrayList<>();
 		King myKing = null;
 
 		for (Piece piece : board.getAllPieceOnChessboard()) {
 			if (piece.getColor() != color)
+			{
 				listPiecesEnemy.add(piece);
+			}
 			else {
 				if (piece.getName().contains("KING"))
+				{
 					myKing = (King) piece;
+				}
 			}
 		}
 
 		for (Piece piece : listPiecesEnemy) {
-			if (piece.isValidMove(myKing.getPosition()))
-				res = true;
+			String pieceName = piece.getName();
+			if (pieceName.contains("QUEEN")) {
+				Queen queen = (Queen) piece;
+				if (queen.isValidMove(myKing.getPosition()))
+				{
+					res = true;
+				}
+			} else if (pieceName.contains("KING")) {
+				King king = (King) piece;
+				if (king.isValidMove(myKing.getPosition()))
+				{
+					res = true;
+				}
+			} else if (pieceName.contains("BISHOP")) {
+				Bishop bishop = (Bishop) piece;
+				if (bishop.isValidMove(myKing.getPosition()))
+				{
+					res = true;
+				}
+			} else if (pieceName.contains("ROOK")) {
+				Rook rook = (Rook) piece;
+				if (rook.isValidMove(myKing.getPosition()))
+				{
+					res = true;
+				}
+			} else if (pieceName.contains("PAWN")) {
+				Pawn pawn = (Pawn) piece;
+				if (pawn.isValidMove(myKing.getPosition()))
+				{
+					res = true;
+				}
+			} else if (pieceName.contains("KNIGHT")) {
+				Knight knight = (Knight) piece;
+				if (knight.isValidMove(myKing.getPosition()))
+				{
+					res = true;
+				}
+			}
 		}
+		
+		return res;
+	}
+	
+	/**
+	 * Méthode qui teste si joueur à gagné
+	 * @return Color renvoie la couleur du joueur qui a gagné la partie, renvoit null si personne n'a gagné
+	 */
+	public Color playerColorWin() {
+		Color res = null;
+		ArrayList<King> listKing = new ArrayList<>();
+
+		for (Piece piece : board.getAllPieceOnChessboard()) {
+			if (piece.getName().contains("KING"))
+				listKing.add((King) piece);
+		}
+		
+		if (listKing.size() == 1)
+		{
+			res = listKing.get(0).getColor();
+		}
+		
 		return res;
 	}
 
 	/**
-	 * Méthode qui teste si un roque est possible pour le joueur dont la couleur est passé en paramètre
-	 * @param color Couleur
+	 * Méthode qui teste si un roque est possible pour le joueur courant
 	 * @return True si un roque est possible, false sinon
 	 */
-	public boolean isRoquePossible(Color color) {
+	public boolean isRoquePossible() {
 		boolean res = false;
 		ArrayList<Rook> listRook = new ArrayList<>();
 		King myKing = null;
 
 		for (Piece piece : board.getAllPieceOnChessboard()) {
-			if (piece.getColor() == color) {
+			if (piece.getColor() == getCurrentColor()) {
 				if (piece.getName().contains("KING"))
 					myKing = (King) piece;
 				else if (piece.getName().contains("ROOK"))
@@ -112,58 +181,66 @@ public final class Game {
 
 		for (Rook rook : listRook) {
 			if (myKing.getPosition().getManhattanDistance(rook.getPosition()) <= 4)
+			{
 				if (myKing.getPosition().isOnSameLineAs(rook.getPosition())) {
 					if (!board.isPiecePresentOnSameLineBetween(myKing.getPosition(), rook.getPosition())) {
 						res = true;
 					}
 				}
+
+			}
 		}
 		return res;
 	}
 
 	/**
-	 * Méthode qui effectue un roque pour le joueur dont la couleur est passé en paramètre
+	 * Méthode qui effectue un roque pour le joueur dont la couleur est passé en
+	 * paramètre
+	 * 
 	 * @param color Couleur
 	 */
 	public void doRoque(King king, Rook rook) {
 		int intKing = 0;
 		int intRook = 0;
 
-		if (king.getPosition().isOnSameLineAs(rook.getPosition())) {
-			if (!board.isPiecePresentOnSameLineBetween(king.getPosition(), rook.getPosition())) {
+		if ( (getCurrentColor() == Color.WHITE && king.isWhite() && rook.isWhite()) || (getCurrentColor() == Color.BLACK && king.isBlack() && rook.isBlack()) ) {
+			if (rook.getName().contains("ROOK") && king.getName().contains("KING")) {
+				if (king.getPosition().isOnSameLineAs(rook.getPosition())) {
+					if (!board.isPiecePresentOnSameLineBetween(king.getPosition(), rook.getPosition())) {
 
-				// Petit roque
-				if (king.getPosition().getManhattanDistance(rook.getPosition()) == 3) {
-					if (king.getPosition().getX() < rook.getPosition().getX())
-					{
-						intKing += 2;
-						intRook -= 2;
-					}
-					else if (king.getPosition().getX() > rook.getPosition().getX()) {
-						intKing -= 2;
-						intRook += 2;
-					}
+						// Petit roque
+						if (king.getPosition().getManhattanDistance(rook.getPosition()) == 3) {
+							if (king.getPosition().getX() < rook.getPosition().getX()) {
+								intKing += 2;
+								intRook -= 2;
+							} else if (king.getPosition().getX() > rook.getPosition().getX()) {
+								intKing -= 2;
+								intRook += 2;
+							}
 
-					// Grand roque
-				} else if (king.getPosition().getManhattanDistance(rook.getPosition()) == 4) {
-					if (king.getPosition().getX() < rook.getPosition().getX())
-					{
-						intKing += 2;
-						intRook -= 3;
-					}
-					else if (king.getPosition().getX() > rook.getPosition().getX()) {
-						intKing -= 2;
-						intRook += 3;
+							// Grand roque
+						} else if (king.getPosition().getManhattanDistance(rook.getPosition()) == 4) {
+							if (king.getPosition().getX() < rook.getPosition().getX()) {
+								intKing += 2;
+								intRook -= 3;
+							} else if (king.getPosition().getX() > rook.getPosition().getX()) {
+								intKing -= 2;
+								intRook += 3;
+							}
+							
+						}
+
+						Position newPosKing = new Position(king.getPosition().getX() + intKing,
+								(king.getPosition().getY()));
+						Position newPosRook = new Position(rook.getPosition().getX() + intRook,
+								(king.getPosition().getY()));
+						board.setPiece(newPosKing, king);
+						board.setPiece(newPosRook, rook);
 					}
 				}
-
-				Position newPosKing = new Position(king.getPosition().getX() + intKing, (king.getPosition().getY()));
-				Position newPosRook = new Position(king.getPosition().getX() + intRook, (king.getPosition().getY()));
-				board.setPiece(newPosKing, king);
-				board.setPiece(newPosRook, rook);
+			}
 		}
 	}
-}
 
 /**
  * Méthode qui joue le tour du joueur courant
@@ -216,148 +293,94 @@ public static void main(String[] args) {
 
 	Game game = new Game(blackPlayerName, whitePlayerName);
 
-	clear();
-
 	while (isTheEndOfTheGame != true) {
-		Position start = null;
-		Position end = null;
+		
+		String nameCurrentPlayer = (game.getCurrentColor() == Color.WHITE) ? game.getWhitePlayerName() : game.getBlackPlayerName();
+		String symbolCurrentPlayer = (game.getCurrentColor() == Color.WHITE) ? "⚐" : "⚑";
+		String prefixCurrentPlayer = " > " + nameCurrentPlayer + " (" + symbolCurrentPlayer + ") : ";
+		String nameCurrentEnemy = (game.getCurrentColor() == Color.WHITE) ? game.getBlackPlayerName() : game.getWhitePlayerName();
+		String symbolCurrentEnemy = (game.getCurrentColor() == Color.WHITE) ? "⚑" : "⚐";
+		
+		if (game.isEchec(game.getCurrentColor()))
+		{
+			System.out.println(prefixCurrentPlayer + "Vous avez été mit en échec par " + nameCurrentEnemy + " (" + symbolCurrentEnemy + ") !\n");
+		}
+		
 		System.out.println(game.board);
 		System.out.println(" # Écrire HISTORIQUE pour voir l'historique des coups jouées.\n");
 		System.out.println(" # Si possible, écrire ROQUE pour effectuer un roque.\n");
+		
+			try {
+				System.out.println(prefixCurrentPlayer + "Lieu actuel de la pièce à déplacer ? (exemple : A1)");
+				String choice = sc.nextLine();
 
-		if (game.isEchec(Color.BLACK))
-			System.out.println(" # " + game.getBlackPlayerName() + " (⚑) à mit en échec "
-					+ game.getWhitePlayerName() + " (⚐) !\n");
-		if (game.isEchec(Color.WHITE))
-			System.out.println(" # " + game.getWhitePlayerName() + " (⚐) à mit en échec "
-					+ game.getBlackPlayerName() + " (⚑) !\\n");
-
-		if (game.currentColor == Color.WHITE) {
+				switch (choice.toUpperCase()) {
+				/*
+				 * On a choisi un switch en se disant que dans une version futur on pourrait
+				 * ajouter des commandes comme REGLES
+				 */
+				case "HISTORIQUE":
+					System.out.println("\n");
+					game.board.printHistoric();
+					System.out.println("\n");
+					
+					System.out.println(prefixCurrentPlayer + "Position actuel de la pièce à déplacer ? (exemple : A1)");
+					Position start = new Position(sc.nextLine().toUpperCase());
+					System.out.println(prefixCurrentPlayer + "Position de destination de la pièce ? (exemple : A4)");
+					Position end = new Position(sc.nextLine().toUpperCase());
+					game.turn(start, end);
+					game.currentColor = (game.getCurrentColor() == Color.WHITE) ? Color.BLACK : Color.WHITE;
+					clear();
+					break;
+					
+				case "ROQUE":
+					if (game.isRoquePossible()) {
+						System.out.println(prefixCurrentPlayer + "[ ROQUE ] Position du roi ? (exemple : D1)");
+						Position roi = new Position(sc.nextLine().toUpperCase());
+						System.out.println(prefixCurrentPlayer + "[ ROQUE ] Position de la tour ? (exemple : A1)");
+						Position rook = new Position(sc.nextLine().toUpperCase());
+						game.doRoque((King) game.board.getPiece(roi), (Rook) game.board.getPiece(rook));
+						game.currentColor = (game.getCurrentColor() == Color.WHITE) ? Color.BLACK : Color.WHITE;
+						clear();
+					}
+					else {
+						clear();
+						System.out.println(" ‼ Roque non disponible");
+					}
+					break;
+				
+				default :
+					start = new Position(choice);
+					System.out.println(prefixCurrentPlayer + "Position de destination de la pièce ? (exemple : A4)");
+					end = new Position(sc.nextLine().toUpperCase());
+					game.turn(start, end);
+					game.currentColor = (game.getCurrentColor() == Color.WHITE) ? Color.BLACK : Color.WHITE;
+					clear();
+					break;
+				}
+				
+			} catch (IllegalArgumentException exception) {
+				clear();
+				System.out.print(exception.getMessage() + "\n");
+			} catch (ChessMoveException exception) {
+				clear();
+				System.out.print(exception.getMessage() + "\n");
+			}
+			catch (ClassCastException exception) {
+				clear();
+				System.out.print(" ‼ Erreur dans le choix des pièces pour le ROQUE.\n");
+			}
 			
-			try {
-				System.out.println(" > " + game.getWhitePlayerName()
-				+ " (⚐) : Lieu actuel de la pièce à déplacer ? (exemple : A1)");
-				String choice = sc.nextLine();
-
-				switch (choice.toUpperCase()) {
-				/*
-				 * On a choisi un switch en se disant que dans une version futur on pourrait
-				 * ajouter des commandes comme REGLES
-				 */
-				case "HISTORIQUE":
-					System.out.println("\n");
-					game.board.printHistoric();
-					System.out.println("\n");
-					
-					System.out.println(" > " + game.getWhitePlayerName() + " (⚐) : Position actuel de la pièce à déplacer ? (exemple : A1)");
-					start = new Position(sc.nextLine());
-					System.out.println(" > " + game.getWhitePlayerName() + " (⚐) : Position de destination de la pièce ? (exemple : A4)");
-					end = new Position(sc.nextLine());
-					game.turn(start, end);
-					game.currentColor = Color.BLACK;
-					clear();
-					
-				case "ROQUE":
-					if (game.isRoquePossible(game.getCurrentColor())) {
-						System.out.println(" > " + game.getWhitePlayerName() + " (⚐) : [ ROQUE ] Position du roi ? (exemple : A4)");
-						start = new Position(sc.nextLine());
-						System.out.println(" > " + game.getWhitePlayerName() + " (⚐) : [ ROQUE ] Position de la tour ? (exemple : A1)");
-						end = new Position(sc.nextLine());
-						if (game.board.getPiece(start).isWhite() && game.board.getPiece(start).getName().contains("KING"))
-						{
-							if (game.board.getPiece(start).isWhite() && game.board.getPiece(start).getName().contains("ROOK"))
-							{
-								game.doRoque((King) game.board.getPiece(start), (Rook) game.board.getPiece(end));
-								game.currentColor = Color.BLACK;
-								clear();
-							}
-						}
-					}
-					else {
-						System.out.println(" ‼ Roque non disponible");
-					}
-				
-				default :
-					start = new Position(choice);
-					System.out.println(" > " + game.getWhitePlayerName() + " (⚐) : Position de destination de la pièce ? (exemple : A4)");
-					end = new Position(sc.nextLine());
-					game.turn(start, end);
-					game.currentColor = Color.BLACK;
-					clear();
-				}
-				
-			} catch (IllegalArgumentException exception) {
-				System.out.print(exception.getMessage() + "\n");
-			} catch (ChessMoveException exception) {
-				System.out.print(exception.getMessage() + "\n");
+			if (game.playerColorWin() != null)
+			{
+				isTheEndOfTheGame = true;
+				String winner = (game.playerColorWin() == Color.WHITE) ? game.getWhitePlayerName() : game.getBlackPlayerName();
+				System.out.print(" # Félicitation au vainqueur : " + winner + "\n");
 			}
 		}
 
-		else if (game.currentColor == Color.BLACK) {
-
-			try {
-				System.out.println(" > " + game.getBlackPlayerName()
-				+ " (⚑) : Lieu actuel de la pièce à déplacer ? (exemple : A1)");
-				String choice = sc.nextLine();
-
-				switch (choice.toUpperCase()) {
-				/*
-				 * On a choisi un switch en se disant que dans une version futur on pourrait
-				 * ajouter des commandes comme REGLES
-				 */
-				case "HISTORIQUE":
-					System.out.println("\n");
-					game.board.printHistoric();
-					System.out.println("\n");
-					
-					System.out.println(" > " + game.getBlackPlayerName() + " (⚑) : Position actuel de la pièce à déplacer ? (exemple : A1)");
-					start = new Position(sc.nextLine());
-					System.out.println(" > " + game.getBlackPlayerName() + " (⚑) : Position de destination de la pièce ? (exemple : A4)");
-					end = new Position(sc.nextLine());
-					game.turn(start, end);
-					game.currentColor = Color.WHITE;
-					clear();
-					
-				case "ROQUE":
-					if (game.isRoquePossible(game.getCurrentColor())) {
-						System.out.println(" > " + game.getBlackPlayerName() + " (⚑) : [ ROQUE ] Position du roi ? (exemple : A4)");
-						start = new Position(sc.nextLine());
-						System.out.println(" > " + game.getBlackPlayerName() + " (⚑) : [ ROQUE ] Position de la tour ? (exemple : A1)");
-						end = new Position(sc.nextLine());
-						if (game.board.getPiece(start).isBlack() && game.board.getPiece(start).getName().contains("KING"))
-						{
-							if (game.board.getPiece(start).isBlack() && game.board.getPiece(start).getName().contains("ROOK"))
-							{
-								game.doRoque((King) game.board.getPiece(start), (Rook) game.board.getPiece(end));
-								game.currentColor = Color.WHITE;
-								clear();
-							}
-						}
-					}
-					else {
-						System.out.println(" ‼ Roque non disponible");
-					}
-				
-				default :
-					start = new Position(choice);
-					System.out.println(" > " + game.getBlackPlayerName() + " (⚑) : Position de destination de la pièce ? (exemple : A4)");
-					end = new Position(sc.nextLine());
-					game.turn(start, end);
-					game.currentColor = Color.WHITE;
-					clear();
-				}
-				
-			} catch (IllegalArgumentException exception) {
-				clear();
-				System.out.print(exception.getMessage() + "\n");
-			} catch (ChessMoveException exception) {
-				clear();
-				System.out.print(exception.getMessage() + "\n");
-			}
-		}
-
-	}
 	sc.close();
+	
 }
 
 }

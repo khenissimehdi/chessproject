@@ -14,7 +14,7 @@ public class ChessMoveException extends java.lang.Exception {
 	 * @param destination Position de la case de destination du déplacement
 	 */
 	public ChessMoveException(String message, Position startingPosition, Position destination) {
-		super(" ‼ " + message + " ( " + startingPosition + " → " + destination + " )");
+		super(" ‼ " + message + " ( " + startingPosition + " → " + destination + " ).");
 	}
 
 	private static final long serialVersionUID = 1L;

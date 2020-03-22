@@ -35,7 +35,7 @@ public class Position {
 	public Position(String algebraicNotation) throws IllegalArgumentException {
 
 		if (algebraicNotation.length() != 2) {
-			throw new IllegalArgumentException(" ‼ Position invalide : la chaine de caractères ne possèdent pas deux caractères.");
+			throw new IllegalArgumentException(" ‼ Position invalide : la chaine de caractères ne possède pas deux caractères.");
 		}
 
 		char pos1 = algebraicNotation.charAt(0);

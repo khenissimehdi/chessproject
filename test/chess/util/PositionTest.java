@@ -69,15 +69,10 @@ class PositionTest {
 	}
 	
 	@Test
-	void equalsNullTest() {
-		Position pos1 = new Position(0,0);
-		assertFalse(pos1.equals(null));
-	}
-	
-	@Test
-	void equalsDifferentClassTest() {
-		Position pos1 = new Position(0,0);
-		assertFalse(pos1.equals(3));
+	void equalsDifferentTest() {
+		Position pos1 = new Position(3,4);
+		Position pos2 = new Position(4,3);
+		assertFalse(pos1.equals(pos2));
 	}
 	
 	@Test
@@ -114,5 +109,83 @@ class PositionTest {
 		assertEquals(pos.getY(), 5);
 	}
 	
+	
+	
+	
+	
+	@Test
+	public void toAlgebraicNotationTest() {
+		assertEquals(new Position(0,0).toAlgebraicNotation(),"A1");
+		assertEquals(new Position(1,0).toAlgebraicNotation(),"A2");
+		assertEquals(new Position(2,0).toAlgebraicNotation(),"A3");
+		assertEquals(new Position(3,0).toAlgebraicNotation(),"A4");
+		assertEquals(new Position(4,0).toAlgebraicNotation(),"A5");
+		assertEquals(new Position(5,0).toAlgebraicNotation(),"A6");
+		assertEquals(new Position(6,0).toAlgebraicNotation(),"A7");
+		assertEquals(new Position(7,0).toAlgebraicNotation(),"A8");
+		
+		assertEquals(new Position(0,1).toAlgebraicNotation(),"B1");
+		assertEquals(new Position(1,1).toAlgebraicNotation(),"B2");
+		assertEquals(new Position(2,1).toAlgebraicNotation(),"B3");
+		assertEquals(new Position(3,1).toAlgebraicNotation(),"B4");
+		assertEquals(new Position(4,1).toAlgebraicNotation(),"B5");
+		assertEquals(new Position(5,1).toAlgebraicNotation(),"B6");
+		assertEquals(new Position(6,1).toAlgebraicNotation(),"B7");
+		assertEquals(new Position(7,1).toAlgebraicNotation(),"B8");
+
+		assertEquals(new Position(0,2).toAlgebraicNotation(),"C1");
+		assertEquals(new Position(1,2).toAlgebraicNotation(),"C2");
+		assertEquals(new Position(2,2).toAlgebraicNotation(),"C3");
+		assertEquals(new Position(3,2).toAlgebraicNotation(),"C4");
+		assertEquals(new Position(4,2).toAlgebraicNotation(),"C5");
+		assertEquals(new Position(5,2).toAlgebraicNotation(),"C6");
+		assertEquals(new Position(6,2).toAlgebraicNotation(),"C7");
+		assertEquals(new Position(7,2).toAlgebraicNotation(),"C8");
+		
+		assertEquals(new Position(0,3).toAlgebraicNotation(),"D1");
+		assertEquals(new Position(1,3).toAlgebraicNotation(),"D2");
+		assertEquals(new Position(2,3).toAlgebraicNotation(),"D3");
+		assertEquals(new Position(3,3).toAlgebraicNotation(),"D4");
+		assertEquals(new Position(4,3).toAlgebraicNotation(),"D5");
+		assertEquals(new Position(5,3).toAlgebraicNotation(),"D6");
+		assertEquals(new Position(6,3).toAlgebraicNotation(),"D7");
+		assertEquals(new Position(7,3).toAlgebraicNotation(),"D8");
+		
+		assertEquals(new Position(0,4).toAlgebraicNotation(),"E1");
+		assertEquals(new Position(1,4).toAlgebraicNotation(),"E2");
+		assertEquals(new Position(2,4).toAlgebraicNotation(),"E3");
+		assertEquals(new Position(3,4).toAlgebraicNotation(),"E4");
+		assertEquals(new Position(4,4).toAlgebraicNotation(),"E5");
+		assertEquals(new Position(5,4).toAlgebraicNotation(),"E6");
+		assertEquals(new Position(6,4).toAlgebraicNotation(),"E7");
+		assertEquals(new Position(7,4).toAlgebraicNotation(),"E8");
+		
+		assertEquals(new Position(0,5).toAlgebraicNotation(),"F1");
+		assertEquals(new Position(1,5).toAlgebraicNotation(),"F2");
+		assertEquals(new Position(2,5).toAlgebraicNotation(),"F3");
+		assertEquals(new Position(3,5).toAlgebraicNotation(),"F4");
+		assertEquals(new Position(4,5).toAlgebraicNotation(),"F5");
+		assertEquals(new Position(5,5).toAlgebraicNotation(),"F6");
+		assertEquals(new Position(6,5).toAlgebraicNotation(),"F7");
+		assertEquals(new Position(7,5).toAlgebraicNotation(),"F8");
+		
+		assertEquals(new Position(0,6).toAlgebraicNotation(),"G1");
+		assertEquals(new Position(1,6).toAlgebraicNotation(),"G2");
+		assertEquals(new Position(2,6).toAlgebraicNotation(),"G3");
+		assertEquals(new Position(3,6).toAlgebraicNotation(),"G4");
+		assertEquals(new Position(4,6).toAlgebraicNotation(),"G5");
+		assertEquals(new Position(5,6).toAlgebraicNotation(),"G6");
+		assertEquals(new Position(6,6).toAlgebraicNotation(),"G7");
+		assertEquals(new Position(7,6).toAlgebraicNotation(),"G8");
+		
+		assertEquals(new Position(0,7).toAlgebraicNotation(),"H1");
+		assertEquals(new Position(1,7).toAlgebraicNotation(),"H2");
+		assertEquals(new Position(2,7).toAlgebraicNotation(),"H3");
+		assertEquals(new Position(3,7).toAlgebraicNotation(),"H4");
+		assertEquals(new Position(4,7).toAlgebraicNotation(),"H5");
+		assertEquals(new Position(5,7).toAlgebraicNotation(),"H6");
+		assertEquals(new Position(6,7).toAlgebraicNotation(),"H7");
+		assertEquals(new Position(7,7).toAlgebraicNotation(),"H8");
+	}
 	
 }

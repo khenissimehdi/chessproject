@@ -66,14 +66,11 @@ public class Position {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-
 		boolean res = false;
-
 		Position pos = (Position) obj;
-		if ((getX() != pos.getX()) || (getY() != pos.getY())) {
-			res = false;
+		if ((getX() == pos.getX()) && (getY() == pos.getY())) {
+			res = true;
 		}
-
 		return res;
 	}
 
@@ -116,9 +113,9 @@ public class Position {
 	}
 
 	public boolean isOnSameDiagonalAs(Position pos) {
-		int pos1 = Math.abs(pos.getX() - this.getY());
-		int pos2 = Math.abs(this.getX() - pos.getY());
-		return pos1 == pos2;
+		int posX = Math.abs(pos.getX() - this.getX());
+		int posY = Math.abs(this.getY() - pos.getY());
+		return posX == posY;
 	}
 
 	public boolean isOnSameLineAs(Position pos) {

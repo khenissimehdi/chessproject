@@ -8,10 +8,6 @@ import chess.util.ChessMoveException;
 import chess.util.Color;
 import chess.util.Position;
 
-/**
- * @author khen0002
- *
- */
 public abstract class Piece {
 
 	private Color color;
@@ -67,7 +63,7 @@ public abstract class Piece {
 			this.board.setPiece(destination, this);
 			this.position = destination;
 		} else {
-			throw new ChessMoveException("Erreur : ", this.position, destination);
+			throw new ChessMoveException("Déplacement impossible : ", this.position, destination);
 		}
 	}
 

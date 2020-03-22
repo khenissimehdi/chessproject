@@ -1,106 +1,152 @@
 package chess;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
-
-import chess.pieces.Piece;
-import chess.pieces.Rook;
+import chess.util.ChessMoveException;
 import chess.util.Color;
 import chess.util.Position;
+import chess.pieces.Piece;
+import chess.pieces.Rook;
 
 class ChessboardTest {
+	
+	
+	@Test
+	void getPieceXYTest() {
+		Chessboard board = new Chessboard();
+		Position posPiece = new Position(4, 4);
+		Piece piece = new Rook(board, posPiece, Color.BLACK);
+		board.setPiece(posPiece, piece);
+		assertEquals(piece, board.getPiece(4, 4));
+	}
+	
+	@Test
+	void getPiecePositionTest() {
+		Chessboard board = new Chessboard();
+		Position posPiece = new Position(4, 4);
+		Piece piece = new Rook(board, posPiece, Color.BLACK);
+		board.setPiece(posPiece, piece);
+		assertEquals(piece, board.getPiece(posPiece));
+	}
 
 	@Test
-	void getPieceTest() {
-		Chessboard b = new Chessboard();
-		Piece p =  new Rook(this, new Position(7, 0), Color.BLACK);
-		assertEquals(p,b.getPiece(7, 0));
+	void getPieceXYNullTest() {
+		Chessboard board = new Chessboard();
+		assertEquals(null, board.getPiece(4,4));
 	}
+	
 	@Test
-	void getPiecePosTest() {
-		Chessboard b = new Chessboard();
-		Piece p =  new Rook(this, new Position(7, 0), Color.BLACK);
-		assertEquals(p,b.getPiece(new Position(7, 0)));
+	void getPiecePositionNullTest() {
+		Chessboard board = new Chessboard();
+		Position pos = new Position(4, 4);
+		assertEquals(null, board.getPiece(pos));
 	}
-	@Test 
-	void addHistoricTest() {
-		Chessboard b = new Chessboard();
-		Position Old = new Position(0,1);
-		Position New = new Position(0,2);
-		b.addHistoric(" ROOK",Old,New);
-		String s = "1 Déplacement du ROOK de la case "+Old.toAlgebraicNotation() + " à la case " New.toAlgebraicNotation()+".";
-		assertEquals(s,b.printHistoric());
-	}
+	
+	
 	@Test
-	void printHistoricTest() {
-		Chessboard b = new Chessboard();
-		Position Old = new Position(0,1);
-		Position New = new Position(0,2);
-		b.addHistoric(" ROOK",Old,New);
-		String s = "1 Déplacement du ROOK de la case "+Old.toAlgebraicNotation() + " à la case " New.toAlgebraicNotation()+".";
-		assertEquals(s,b.printHistoric());
+	void isNotPiecePresentOnSameColumnBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 2);
+		Position end = new Position(0, 7);
+		assertFalse(board.isPiecePresentOnSameColumnBetween(start, end));
 	}
-	@Test 
-	void isPiecePresentOnSameColumnBetweenFalseTest() {
-		Chessboard b = new Chessboard();
-		Position one = new Position(0,1);
-		Position two = new Position(0,2);
-		assertEquals(false,b.isPiecePresentOnSameColumnBetween(one,two));
-		
-		
+
+	@Test
+	void isPiecePresentOnSameColumnBetweenLowStartTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 2);
+		Position end = new Position(0, 7);
+		Position posPiece = new Position(0, 4);
+		Piece piece = new Rook(board, posPiece, Color.BLACK);
+		board.setPiece(posPiece, piece);
+		assertTrue(board.isPiecePresentOnSameColumnBetween(start, end));
 	}
-	@Test 
-	void isPiecePresentOnSameColumnBetweenTest() {
-		Chessboard b = new Chessboard();
-		Position one = new Position(0,1);
-		Position two = new Position(0,3);
-		Piece p =  new Rook(this, new Position(0, 1), Color.BLACK);
-		Position pos = new Position(0,2);
-		b.setPiece(pos, p);
-		assertEquals(true,b.isPiecePresentOnSameColumnBetween(one,two));
-		
-		
+	
+	@Test
+	void isPiecePresentOnSameColumnBetweenHighStartTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 7);
+		Position end = new Position(0, 2);
+		Position posPiece = new Position(0, 4);
+		Piece piece = new Rook(board, posPiece, Color.BLACK);
+		board.setPiece(posPiece, piece);
+		assertTrue(board.isPiecePresentOnSameColumnBetween(start, end));
 	}
-	@Test 
-	void isPiecePresentOnSameDiagonalBetweenFalseTest() {
-		Chessboard b = new Chessboard();
-		Position one = new Position(1,1);
-		Position two = new Position(2,2);
-		assertEquals(false,b.isPiecePresentOnSameDiagonalBetween(one,two));	
+	
+
+	@Test
+	void isNotPiecePresentOnSameDiagonalBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 2);
+		Position end = new Position(3, 5);
+		assertFalse(board.isPiecePresentOnSameDiagonalBetween(start, end));
 	}
-	@Test 
-	void isPiecePresentOnSameDiagonalBetweenTest() {
-		Chessboard b = new Chessboard();
-		Position one = new Position(1,1);
-		Position two = new Position(3,3);
-		Piece p =  new Rook(this, new Position(2, 2), Color.BLACK);
-		Position pos = new Position(2,2);
-		assertEquals(true,b.isPiecePresentOnSameDiagonalBetween(one,two));	
+	
+	@Test
+	void isPiecePresentOnSameDiagonalBetweenLowStartTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 2);
+		Position end = new Position(3, 5);
+		Position posPiece = new Position(1, 3);
+		Piece piece = new Rook(board, posPiece, Color.BLACK);
+		board.setPiece(posPiece, piece);
+		assertTrue(board.isPiecePresentOnSameDiagonalBetween(start, end));
 	}
-	@Test 
-	void isPiecePresentOnSameLineBetweenFalseTest() {
-		Chessboard b = new Chessboard();
-		Position one = new Position(1,0);
-		Position two = new Position(2,0);
-		assertEquals(false,b.isPiecePresentOnSameDiagonalBetween(one,two));	
+	
+	@Test
+	void isPiecePresentOnSameDiagonalBetweenHighStartTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(3, 5);
+		Position end = new Position(0, 2);
+		Position posPiece = new Position(1, 3);
+		Piece piece = new Rook(board, posPiece, Color.BLACK);
+		board.setPiece(posPiece, piece);
+		assertTrue(board.isPiecePresentOnSameDiagonalBetween(start, end));
 	}
-	@Test 
-	void isPiecePresentOnSameLineBetweenTest() {
-		Chessboard b = new Chessboard();
-		Position one = new Position(1,0);
-		Position two = new Position(3,0);
-		Piece p =  new Rook(this, new Position(2, 0), Color.BLACK);
-		Position pos = new Position(2,0);
-		assertEquals(true,b.isPiecePresentOnSameDiagonalBetween(one,two));	
+	
+	
+	@Test
+	void isNotPiecePresentOnSameLineBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 4);
+		Position end = new Position(7, 4);
+		assertFalse(board.isPiecePresentOnSameLineBetween(start, end));
 	}
+	
+	@Test
+	void isPiecePresentOnSameLineLowStartBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 4);
+		Position end = new Position(7, 4);
+		Position posPiece = new Position(4, 4);
+		Piece piece = new Rook(board, posPiece, Color.BLACK);
+		board.setPiece(posPiece, piece);
+		assertTrue(board.isPiecePresentOnSameLineBetween(start, end));
+	}
+	
+	@Test
+	void isPiecePresentOnSameLineHighStartBetweenTest() {
+		Chessboard board = new Chessboard();
+		Position start = new Position(0, 4);
+		Position end = new Position(7, 4);
+		Position posPiece = new Position(4, 4);
+		Piece piece = new Rook(board, posPiece, Color.BLACK);
+		board.setPiece(posPiece, piece);
+		assertTrue(board.isPiecePresentOnSameLineBetween(start, end));
+	}
+	
+	
 	@Test
 	void setPiece() {
-		Chessboard b = new Chessboard();
-		Piece p =  new Rook(this, new Position(0, 1), Color.BLACK);
-		Position pos = new Position(2,2);
-		b.setPiece(pos, p);
-		assertEquals(p.getName(),b.getPiece(pos).getName());		
+		Chessboard board = new Chessboard();
+		Piece piece = new Rook(board, new Position(0, 1), Color.BLACK);
+		Position pos = new Position(2, 2);
+		board.setPiece(pos, piece);
+		assertEquals(piece.getName(), board.getPiece(pos).getName());
+	}
+	
+	@Test
+	void toStringTest() {
 	}
 
 }

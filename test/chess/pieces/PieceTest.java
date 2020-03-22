@@ -10,9 +10,6 @@ import chess.util.Position;
 import chess.util.Symbol;
 
 class PieceTest {
-
-	
-	
 	
 	@Test
 	public void getColorTest() {
@@ -26,14 +23,6 @@ class PieceTest {
 		Chessboard board = new Chessboard();
 		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
 		assertEquals("_PAWN",piece.getName());
-	}
-	
-	@Test
-	public void getPositionTest() {
-		Chessboard board = new Chessboard();
-		Piece piece = new Pawn(board, new Position(6, 0), Color.BLACK);
-		Position pos = new Position(6, 0);
-		assertEquals(pos,piece.getPosition());
 	}
 	
 	@Test

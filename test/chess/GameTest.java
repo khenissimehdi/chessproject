@@ -1,18 +1,21 @@
 package chess;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
-
+import chess.util.ChessMoveException;
 import chess.util.Color;
+import chess.util.Position;
 
 class GameTest {
 
 	@Test
 	void TurnTest() {
 		Game g = new Game("Mehdi","Charles");
-		g.turn(new Position(0,0),new Position(0,3));
-		assertEquals(Color.BLACK,g.getCurrentColor())
+		assertEquals(Color.WHITE,g.getCurrentColor());
+		try {
+			g.turn(new Position(0,0),new Position(0,3));
+			assertEquals(Color.BLACK,g.getCurrentColor());
+		} catch (ChessMoveException exception){}
 	}
 
 	@Test
@@ -51,7 +54,10 @@ class GameTest {
 	@Test
 	void getCurrentColorAfterTurnTest() {
 		Game g = new Game("Mehdi","Charles");
-		g.turn(new Position(0,0),new Position(0,3));
+		try {
+			g.turn(new Position(0,0),new Position(0,3));
+			assertEquals(Color.BLACK,g.getCurrentColor());
+		} catch (ChessMoveException exception){}
 		assertEquals(Color.BLACK,g.getCurrentColor());
 	}
 
